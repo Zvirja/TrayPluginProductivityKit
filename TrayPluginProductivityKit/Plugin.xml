@@ -1,0 +1,5 @@
+﻿<plugin version="1.3">
+  <init>
+    <processor type="TrayPluginProductivityKit.EntryPoint, TrayPluginProductivityKit" />
+  </init>
+</plugin>

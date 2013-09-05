@@ -99,6 +99,7 @@
     <Compile Include="InstanceMarking\MarkingProvider.cs" />
     <Compile Include="InstancePIDs\CollectorState.cs" />
     <Compile Include="InstancePIDs\InsnanceMenuCollector.cs" />
+    <Compile Include="InstancePIDs\ProcessMonitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ProductivityKitResources.Designer.cs">
       <AutoGen>True</AutoGen>

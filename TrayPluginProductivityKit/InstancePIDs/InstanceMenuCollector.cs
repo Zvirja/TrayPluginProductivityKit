@@ -12,14 +12,30 @@ using SIM.Tool.Plugins.TrayPlugin.TrayIcon.ContextMenu;
 
 namespace TrayPluginProductivityKit.InstancePIDs
 {
-  public class InsnanceMenuCollector
+  public class InstanceMenuCollector
   {
+    public static InstanceMenuCollector Collector { get; set; }
+
+    public static void Initialize()
+    {
+      Collector = new InstanceMenuCollector();
+      Collector.InitializeInstance();
+    }
+
+    protected CollectorState CurrentState { get; set; }
 
     public Dictionary<Instance,ToolStripItem> ContextMenu { get; set; }
-    protected CollectorState CurrentState { get; set; }
     public volatile bool IsUnderConstruction;
+    public event Action<InstanceMenuCollector> ContextMenuUpdated;
 
-    public void Initialize()
+
+
+    protected InstanceMenuCollector()
+    {
+      
+    }
+
+    public void InitializeInstance()
     {
       CurrentState = CollectorState.MenuBuilded;
       ContextMenu = new Dictionary<Instance, ToolStripItem>();
@@ -34,6 +50,7 @@ namespace TrayPluginProductivityKit.InstancePIDs
         throw new Exception("State inconsistency");
       CurrentState = CollectorState.MenuBuilded;
       IsUnderConstruction = false;
+      OnContextMenuUpdated();
     }
 
     protected virtual void OnMenuEntryConstructed(object sender, TrayPluginMessage message)
@@ -59,6 +76,12 @@ namespace TrayPluginProductivityKit.InstancePIDs
       if (relatedInstance == null)
         throw new InvalidDataException("menuItem.Tag is not Instance or is null");
       ContextMenu[relatedInstance] = menuItem;
+    }
+
+    protected virtual void OnContextMenuUpdated()
+    {
+      Action<InstanceMenuCollector> handler = ContextMenuUpdated;
+      if (handler != null) handler(this);
     }
   }
 }

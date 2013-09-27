@@ -87,7 +87,9 @@
     <Compile Include="Configuration\Mappings\Metadata\MappingMetadata.cs" />
     <Compile Include="Configuration\Mappings\Metadata\MetadataManager.cs" />
     <Compile Include="Configuration\SectionHandler.cs" />
-    <Compile Include="EntryPoint.cs" />
+    <Compile Include="EntryPoint.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Helpers\ClickHelper.cs" />
     <Compile Include="Helpers\MainWindowHelperProxy.cs" />
     <Compile Include="Helpers\OSShellHelper.cs" />
@@ -98,7 +100,8 @@
     <Compile Include="InstanceMarking\MarkingManager.cs" />
     <Compile Include="InstanceMarking\MarkingProvider.cs" />
     <Compile Include="InstancePIDs\CollectorState.cs" />
-    <Compile Include="InstancePIDs\InsnanceMenuCollector.cs" />
+    <Compile Include="InstancePIDs\InstanceMenuCollector.cs" />
+    <Compile Include="InstancePIDs\ProcessIDsCustodian.cs" />
     <Compile Include="InstancePIDs\ProcessMonitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ProductivityKitResources.Designer.cs">
@@ -112,6 +115,7 @@
     <Compile Include="SuperClick\ClicksMapping\ClickHandlersMappings.cs" />
     <Compile Include="SuperClick\MouseClickHandlerBase.cs" />
     <Compile Include="SuperClick\SpecializedHandlers\FreeHandlers\CallRefreshDialog.cs" />
+    <Compile Include="SuperClick\SpecializedHandlers\FreeHandlers\IISProcessIDs.cs" />
     <Compile Include="SuperClick\SpecializedHandlers\FreeHandlers\FreeClickHandlerBase.cs" />
     <Compile Include="SuperClick\SpecializedHandlers\FreeHandlers\IISReset.cs" />
     <Compile Include="SuperClick\SpecializedHandlers\FreeHandlers\InstallInstance.cs" />

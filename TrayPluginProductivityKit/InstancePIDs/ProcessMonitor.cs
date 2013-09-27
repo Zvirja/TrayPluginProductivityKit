@@ -4,20 +4,24 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace TrayPluginProductivityKit.InstancePIDs
 {
   public class ProcessMonitor
   {
-    protected Thread WorkingThread { get; set; }
-    protected int[] PIDs { get; set; } 
+    public delegate void ActiveProcessesChanged(List<int> added, List<int> removed, List<int> allPIDs);
+
+    protected CancellationTokenSource CancellationTokenSource { get; set; }
 
     public volatile int WorkLoopIntervalMsec;
+    public event ActiveProcessesChanged PIDsChanged;
+    public List<int> PIDs { get; set; }
 
     public ProcessMonitor()
     {
       WorkLoopIntervalMsec = 1000;
-      PIDs = new int[0];
+      PIDs = new List<int>();
     }
 
     public virtual void StartMonitor()
@@ -27,41 +31,52 @@ namespace TrayPluginProductivityKit.InstancePIDs
 
     public virtual void StopMonitor()
     {
-      try
-      {
-        if(WorkingThread != null)
-          WorkingThread.Abort();
-      }
-      catch
-      {
-      }
+      if (CancellationTokenSource == null)
+        return;
+      CancellationTokenSource.Cancel();
+      CancellationTokenSource = null;
     }
 
     protected virtual void StartWorkingThread()
     {
-      WorkingThread = new Thread(WorkingLoop);
+      if (CancellationTokenSource != null)
+        return;
+      CancellationTokenSource = new CancellationTokenSource();
+      Task.Factory.StartNew(WorkingLoop, CancellationTokenSource.Token, CancellationTokenSource.Token);
     }
 
-    protected virtual void WorkingLoop()
+    protected virtual void WorkingLoop(object tokenObj)
     {
-      try
-      {
-        while (true)
+      var token = (CancellationToken)tokenObj;
+      while (!token.IsCancellationRequested)
+      { 
+        try
         {
-
-          Thread.Sleep(WorkLoopIntervalMsec);
+          ProcessQueue();
         }
-      }
-      catch (ThreadAbortException)
-      {
+        catch
+        {
+          
+        }
+        Thread.Sleep(WorkLoopIntervalMsec);
       }
     }
 
     protected virtual void ProcessQueue()
     {
-      Process[] processes = Process.GetProcessesByName("w3wp.exe");
-      var pids = processes.Select(x => x.Id);
+      Process[] processes = Process.GetProcessesByName("w3wp");
+      var pids = processes.Select(x => x.Id).ToList();
+      var created = pids.Except(PIDs).ToList();
+      var removed = PIDs.Except(pids).ToList();
+      PIDs = pids;
+      if(created.Count !=0 || removed.Count != 0)
+        OnPiDsChanged(created, removed, pids);
+    }
 
+    protected virtual void OnPiDsChanged(List<int> added, List<int> removed, List<int> allpids)
+    {
+      ActiveProcessesChanged handler = PIDsChanged;
+      if (handler != null) handler(added, removed, allpids);
     }
   }
 }

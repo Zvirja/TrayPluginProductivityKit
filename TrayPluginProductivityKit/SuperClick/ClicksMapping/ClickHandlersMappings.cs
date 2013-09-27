@@ -27,7 +27,7 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
       ActualMappings = new ClickHandlersMappings();
     }
 
-    protected Dictionary<string,List<MouseClickHandlerBase>> HandlerMappings { get; set; }
+    protected Dictionary<string, List<MouseClickHandlerBase>> HandlerMappings { get; set; }
 
     public ClickHandlersMappings()
     {
@@ -52,11 +52,13 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
 
     protected void InitializeMappings()
     {
-      
-      
-      AddMapping(TrayIconClickKey, new IISReset() {MouseButtonTrigger = MouseButtons.Middle});
+
+
+      AddMapping(TrayIconClickKey, new IISReset() { MouseButtonTrigger = MouseButtons.Middle });
+      AddMapping(TrayIconClickKey, new IISProcessIDs() { MouseButtonTrigger = MouseButtons.Middle, KeyTriggers = new List<Key> { Key.LeftCtrl } });
+
       AddMapping(ExitEntryClickKey, new OpenPluginContainingFolderAnywhere() { MouseButtonTrigger = MouseButtons.Middle });
-      
+
       AddMapping(SimEntryClickKey, new InstallInstance() { MouseButtonTrigger = MouseButtons.Right });
       AddMapping(SimEntryClickKey, new CallRefreshDialog() { MouseButtonTrigger = MouseButtons.Middle });
       AddMapping(SimEntryClickKey, new RunShowConfigBuilder() { MouseButtonTrigger = MouseButtons.XButton1 });
@@ -72,7 +74,7 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
       AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRootWithConfirmation()
       {
         MouseButtonTrigger = MouseButtons.Left,
-        KeyTriggers = new List<Key>() {Key.LeftCtrl},
+        KeyTriggers = new List<Key>() { Key.LeftCtrl },
         CustomParameters = "Solution.sln"
       });
 
@@ -90,7 +92,7 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
         CustomParameters = @"Website\bin"
       });
 
-      
+
       //LEFT SHIFT
       AddMapping(InstanceClickKey, new RunPage()
       {
@@ -137,7 +139,7 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
       });
 
 
-      }
+    }
 
     protected virtual void AddMapping(string key, MouseClickHandlerBase handler)
     {

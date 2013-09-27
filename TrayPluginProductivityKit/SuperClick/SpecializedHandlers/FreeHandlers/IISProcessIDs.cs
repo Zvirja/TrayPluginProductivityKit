@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Windows.Input;
+using SIM.Base;
+using TrayPluginProductivityKit.Helpers;
+
+namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.FreeHandlers
+{
+  public class IISProcessIDs : FreeClickHandlerBase
+  {
+    protected static readonly string DialogLabel = "SIM - Run instance PIDs";
+
+    protected override bool ProcessClickInternal(ClickDetailsWrapper clickDetails)
+    {
+      try
+      {
+        var param = "list wp";
+        var psi = new ProcessStartInfo(Environment.ExpandEnvironmentVariables(@"%systemroot%\System32\inetsrv\appcmd.exe"), param);
+        psi.CreateNoWindow = false;
+        psi.RedirectStandardOutput = true;
+        psi.UseShellExecute = false;
+        var proc = Process.Start(psi);
+        proc.WaitForExit();
+        var output = proc.StandardOutput.ReadToEnd();
+        if (output.IsNullOrEmpty())
+          OSShellHelper.ShowMessage("No run instances", DialogLabel);
+        else
+          OSShellHelper.ShowMessage(output.Trim(), DialogLabel);
+        return true;
+      }
+      catch (Exception ex)
+      {
+        OSShellHelper.ShowMessage("Unable to retrieve list:{0}{1}".FormatWith(Environment.NewLine, ex.ToString()),
+          DialogLabel, MessageBoxIcon.Error);
+        return true;
+      }
+    }
+  }
+}

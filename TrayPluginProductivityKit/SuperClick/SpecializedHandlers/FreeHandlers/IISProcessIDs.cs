@@ -20,7 +20,8 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.FreeHandlers
       {
         var param = "list wp";
         var psi = new ProcessStartInfo(Environment.ExpandEnvironmentVariables(@"%systemroot%\System32\inetsrv\appcmd.exe"), param);
-        psi.CreateNoWindow = false;
+        psi.CreateNoWindow = true;
+        psi.WindowStyle = ProcessWindowStyle.Hidden;
         psi.RedirectStandardOutput = true;
         psi.UseShellExecute = false;
         var proc = Process.Start(psi);
@@ -30,7 +31,7 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.FreeHandlers
           OSShellHelper.ShowMessage("No run instances", DialogLabel);
         else
           OSShellHelper.ShowMessage(output.Trim(), DialogLabel);
-        return true;
+        return true; 
       }
       catch (Exception ex)
       {

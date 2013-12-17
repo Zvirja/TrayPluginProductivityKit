@@ -12,11 +12,15 @@ namespace TrayPluginProductivityKit.Configuration.Mappings.Metadata
   [Serializable]
   public class MappingMetadata
   {
+    [XmlElement]
     public string RelatedActionKey { get; set; }
+    
+    [XmlElement]
     public string EventName { get; set; }
-
+    
+    [XmlElement]
     public List<string> KeyTriggersStr { get; set; }
-
+    
     [XmlIgnore]
     public List<Key> KeyTriggers {
       get
@@ -27,6 +31,7 @@ namespace TrayPluginProductivityKit.Configuration.Mappings.Metadata
       } 
     }
 
+    [XmlElement]
     public string MouseTriggerStr
     {
       get { return MouseTrigger.ToString(); }
@@ -43,6 +48,7 @@ namespace TrayPluginProductivityKit.Configuration.Mappings.Metadata
     [XmlIgnore]
     public MouseButtons MouseTrigger { get; set; }
 
+    [XmlElement]
     public string Parameters { get; set; }
 
 

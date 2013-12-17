@@ -22,7 +22,8 @@ namespace TrayPluginProductivityKit.InstanceMarking
     public virtual void Initialize()
     {
       ConstructingWaiter = new ManualResetEventSlim(false);
-      ContextMenuManager.ContextMenuUpdated += OnContextMenuUpdated;
+      //One time subscription, handler immediately unsubscribes
+      InstanceManager.InstancesListUpdated += OnInstanceManagerUpdated;
       FileSystemProvider = new FilesystemMarkingProvider();
       SubscribeToMenuRelatedEvents();
     }
@@ -49,24 +50,31 @@ namespace TrayPluginProductivityKit.InstanceMarking
       UnMarkInstanceInternal(menuItem, relatedInstance);
     }
 
-    protected virtual void OnContextMenuUpdated()
+    protected virtual void OnInstanceManagerUpdated(object sender, EventArgs e)
     {
-      ContextMenuManager.ContextMenuUpdated -= OnContextMenuUpdated;
+      //One time subscription
+      InstanceManager.InstancesListUpdated -= OnInstanceManagerUpdated;
       Task.Factory.StartNew(PerformInitialInitialization);
     }
 
 
     protected virtual void PerformInitialInitialization()
     {
-      IEnumerable<Instance> instances = InstanceManager.PartiallyCachedInstances;
       var markedInstances = new List<string>();
-      foreach (Instance instance in instances)
+      try
       {
-        if (FileSystemProvider.IsInstanceMarked(instance))
-          markedInstances.Add(instance.Name);
+        IEnumerable<Instance> instances = InstanceManager.PartiallyCachedInstances;
+        foreach (Instance instance in instances)
+        {
+          if (FileSystemProvider.IsInstanceMarked(instance))
+            markedInstances.Add(instance.Name);
+        }
       }
-      MarkedInstances = markedInstances;
-      ConstructingWaiter.Set();
+      finally
+      {
+        MarkedInstances = markedInstances;
+        ConstructingWaiter.Set();
+      }
     }
 
     protected virtual void SubscribeToMenuRelatedEvents()

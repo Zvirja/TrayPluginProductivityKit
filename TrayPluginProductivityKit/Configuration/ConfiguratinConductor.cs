@@ -20,7 +20,7 @@ namespace TrayPluginProductivityKit.Configuration
           string location = Assembly.GetExecutingAssembly().Location;
           System.Configuration.Configuration configuration = ConfigurationManager.OpenExeConfiguration(location);
           var section = configuration.GetSection("productivityKit");
-          var castedSection = section as SectionHandler;
+          var castedSection = section as AppConfigSectionHandler;
           Assert.IsNotNull(castedSection, "something is wrong with plugin config");
           return castedSection.XmlRepresentation;
         }

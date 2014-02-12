@@ -71,11 +71,10 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
       AddMapping(InstanceClickKey, new UninstallInstance() { MouseButtonTrigger = MouseButtons.XButton2 });
 
       //LEFT CTRL
-      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRootWithConfirmation()
+      AddMapping(InstanceClickKey, new OpenVisualStudioProjectWithConfirmation()
       {
         MouseButtonTrigger = MouseButtons.Left,
         KeyTriggers = new List<Key>() { Key.LeftCtrl },
-        CustomParameters = "Solution.sln"
       });
 
       AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()

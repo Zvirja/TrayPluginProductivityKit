@@ -15,7 +15,7 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandl
   {
     protected override bool ProcessInstanceClickInternal(Instance instance)
     {
-      var path = GetPathToOpen(instance.GetRootPath());
+      var path = GetPathToOpen(instance.RootPath);
       return OpenFileOrFolder(path);
     }
 

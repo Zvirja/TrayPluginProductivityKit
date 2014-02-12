@@ -17,14 +17,14 @@ using TrayPluginProductivityKit.Resources;
 
 namespace TrayPluginProductivityKit
 {
-  public class EntryPoint : IInitProcessor
+  public class EntryPoint : IInitProcessor, IMainWindowLoadedProcessor
   {
 
     public void Process()
     {
       if (!IsTrayPluginAvailable())
         return;
-      TrayPluginAssemblyResolver.Initialize();
+      //TrayPluginAssemblyResolver.Initialize(); //We don't need this ugly hack here.
       //InstanceMenuCollector.Initialize();
       MetadataManager.Initialize();
       MappingsManager.Initialize();
@@ -38,6 +38,11 @@ namespace TrayPluginProductivityKit
     protected virtual bool IsTrayPluginAvailable()
     {
       return AppDomain.CurrentDomain.GetAssemblies().Any(x => x.FullName.Contains("SIM.Tool.Plugins.TrayPlugin"));
+    }
+
+    public void Process(Window mainWindow)
+    {
+      SIMDialogsInteractionHelper.SaveMainWindowReference(mainWindow);
     }
   }
 }

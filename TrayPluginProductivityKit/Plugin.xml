@@ -2,4 +2,9 @@
   <init>
     <processor type="TrayPluginProductivityKit.EntryPoint, TrayPluginProductivityKit" />
   </init>
+  <mainWindow>
+    <loaded>
+      <processor type="TrayPluginProductivityKit.EntryPoint, TrayPluginProductivityKit" />
+    </loaded>
+  </mainWindow>
 </plugin>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SIM.Tool.Plugins.ShowConfigBuilder;
+using SIM.Tool.Windows.MainWindowComponents;
 
 namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.FreeHandlers
 {
@@ -13,4 +13,4 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.FreeHandlers
       return true;
     }
   }
-}
+} 

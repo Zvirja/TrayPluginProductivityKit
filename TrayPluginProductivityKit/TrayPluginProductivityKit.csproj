@@ -30,40 +30,72 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug on public build|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug on public build\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="SIM.Base">
+    <Reference Condition="'$(Configuration)'=='Debug'" Include="SIM.Base">
       <HintPath>..\..\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Base.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SIM.Kernel.Adapters">
+    <Reference Condition="'$(Configuration)'=='Debug'" Include="SIM.Kernel.Adapters">
       <HintPath>..\..\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Kernel.Adapters.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SIM.Kernel.Instances">
+    <Reference Condition="'$(Configuration)'=='Debug'" Include="SIM.Kernel.Instances">
       <HintPath>..\..\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Kernel.Instances.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SIM.Kernel.Products">
+    <Reference Condition="'$(Configuration)'=='Debug'" Include="SIM.Kernel.Products">
       <HintPath>..\..\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Kernel.Products.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SIM.Tool">
-      <HintPath>..\..\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Tool.exe</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="SIM.Tool.Base">
+    <Reference Condition="'$(Configuration)'=='Debug'" Include="SIM.Tool.Base">
       <HintPath>..\..\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Tool.Base.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SIM.Tool.Plugins.ShowConfigBuilder">
-      <HintPath>..\..\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Tool.Plugins.ShowConfigBuilder.dll</HintPath>
+    <Reference Condition="'$(Configuration)'=='Debug'" Include="SIM.Tool.Plugins.TrayPlugin">
+      <HintPath>..\..\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Tool.Plugins.TrayPlugin.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SIM.Tool.Plugins.TrayPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Tool.Plugins.TrayPlugin.dll</HintPath>
+    <Reference Condition="'$(Configuration)'=='Debug'" Include="SIM.Tool.Windows">
+      <HintPath>..\..\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Tool.Windows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Condition="'$(Configuration)'!='Debug'" Include="SIM.Base">
+      <HintPath>D:\SIM.FORBUILD\SIM.Base.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Condition="'$(Configuration)'!='Debug'" Include="SIM.Kernel.Adapters">
+      <HintPath>D:\SIM.FORBUILD\SIM.Kernel.Adapters.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Condition="'$(Configuration)'!='Debug'" Include="SIM.Kernel.Instances">
+      <HintPath>D:\SIM.FORBUILD\SIM.Kernel.Instances.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Condition="'$(Configuration)'!='Debug'" Include="SIM.Kernel.Products">
+      <HintPath>D:\SIM.FORBUILD\SIM.Kernel.Products.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Condition="'$(Configuration)'!='Debug'" Include="SIM.Tool.Base">
+      <HintPath>D:\SIM.FORBUILD\SIM.Tool.Base.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Condition="'$(Configuration)'!='Debug'" Include="SIM.Tool.Plugins.TrayPlugin">
+      <HintPath>D:\SIM.FORBUILD\Plugins\Tray Plugin\SIM.Tool.Plugins.TrayPlugin.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Condition="'$(Configuration)'!='Debug'" Include="SIM.Tool.Windows">
+      <HintPath>D:\SIM.FORBUILD\SIM.Tool.Windows.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -72,9 +104,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -86,7 +115,6 @@
     <Compile Include="Configuration\Mappings\Metadata\ActionMetadata.cs" />
     <Compile Include="Configuration\Mappings\Metadata\MappingMetadata.cs" />
     <Compile Include="Configuration\Mappings\Metadata\MetadataManager.cs" />
-    <Compile Include="Configuration\SectionHandler.cs" />
     <Compile Include="EntryPoint.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -120,10 +148,12 @@
     <Compile Include="SuperClick\SpecializedHandlers\FreeHandlers\IISReset.cs" />
     <Compile Include="SuperClick\SpecializedHandlers\FreeHandlers\InstallInstance.cs" />
     <Compile Include="SuperClick\SpecializedHandlers\FreeHandlers\OpenFileOrFolderAnywhere.cs" />
-    <Compile Include="SuperClick\SpecializedHandlers\FreeHandlers\OpenAssemlyContainingFolder.cs" />
+    <Compile Include="SuperClick\SpecializedHandlers\FreeHandlers\OpenPluginContainingFolderAnywhere.cs" />
     <Compile Include="SuperClick\SpecializedHandlers\FreeHandlers\OpenFileOrFolderAnywhereWithConfirmation.cs" />
     <Compile Include="SuperClick\SpecializedHandlers\FreeHandlers\OpenSIMWindow.cs" />
     <Compile Include="SuperClick\SpecializedHandlers\FreeHandlers\RunShowConfigBuilder.cs" />
+    <Compile Include="SuperClick\SpecializedHandlers\InstanceHandlers\OpenVisualStudioProjectWithConfirmation.cs" />
+    <Compile Include="SuperClick\SpecializedHandlers\InstanceHandlers\OpenVisualStudioProject.cs" />
     <Compile Include="SuperClick\SpecializedHandlers\InstanceHandlers\OpenCurrentLog.cs" />
     <Compile Include="SuperClick\SpecializedHandlers\InstanceHandlers\OpenFileOrFolderInsideRoot.cs" />
     <Compile Include="SuperClick\SpecializedHandlers\InstanceHandlers\InstanceClickHandlerBase.cs" />
@@ -136,7 +166,9 @@
     <Content Include="Plugin.xml">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\favicon.ico" />
     <None Include="Resources\6.4.ico" />
     <None Include="Resources\6.5.ico" />
@@ -149,7 +181,6 @@
     <None Include="Resources\7.1.ico" />
     <None Include="Resources\7.2.ico" />
     <None Include="Resources\6.1.ico" />
-    <Content Include="SIM.Tool.Plugins.TrayPlugin.dll" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ProductivityKitResources.resx">

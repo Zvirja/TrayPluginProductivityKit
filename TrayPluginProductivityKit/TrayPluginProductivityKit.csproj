@@ -97,6 +97,36 @@
     <Reference Condition="'$(Configuration)'!='Debug'" Include="SIM.Tool.Windows">
       <HintPath>D:\SIM.FORBUILD\SIM.Tool.Windows.dll</HintPath>
       <Private>False</Private>
+    <Reference Include="SIM.Base">
+      <HintPath>..\..\..\Visual Studio 2012\Projects\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Base.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SIM.Kernel.Adapters">
+      <HintPath>..\..\..\Visual Studio 2012\Projects\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Kernel.Adapters.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SIM.Kernel.Instances">
+      <HintPath>..\..\..\Visual Studio 2012\Projects\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Kernel.Instances.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SIM.Kernel.Products">
+      <HintPath>..\..\..\Visual Studio 2012\Projects\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Kernel.Products.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SIM.Tool">
+      <HintPath>..\..\..\Visual Studio 2012\Projects\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Tool.exe</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SIM.Tool.Base">
+      <HintPath>..\..\..\Visual Studio 2012\Projects\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Tool.Base.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SIM.Tool.Plugins.ShowConfigBuilder">
+      <HintPath>D:\SIM.STABLE\Plugins\ShowConfig Builder\SIM.Tool.Plugins.ShowConfigBuilder.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SIM.Tool.Plugins.TrayPlugin">
+      <HintPath>..\..\..\Visual Studio 2012\Projects\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Tool.Plugins.TrayPlugin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />

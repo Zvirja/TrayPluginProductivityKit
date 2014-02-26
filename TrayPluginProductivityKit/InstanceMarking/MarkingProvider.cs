@@ -8,16 +8,23 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SIM.Instances;
-using SIM.Tool.Plugins.TrayPlugin.Messaging;
+using SIM.Tool.Plugins.TrayPlugin;
 using SIM.Tool.Plugins.TrayPlugin.TrayIcon.ContextMenu;
+using SIM.Tool.Plugins.TrayPlugin.TrayIcon.ContextMenu.Eventing;
 
 namespace TrayPluginProductivityKit.InstanceMarking
 {
   public class MarkingProvider
   {
-    protected List<string> MarkedInstances { get; set; }
-    protected FilesystemMarkingProvider FileSystemProvider { get; set; }
+    #region Properties
+
     protected ManualResetEventSlim ConstructingWaiter { get; set; }
+    protected FilesystemMarkingProvider FileSystemProvider { get; set; }
+    protected List<string> MarkedInstances { get; set; }
+
+    #endregion
+
+    #region Public Methods and Operators
 
     public virtual void Initialize()
     {
@@ -28,19 +35,19 @@ namespace TrayPluginProductivityKit.InstanceMarking
       SubscribeToMenuRelatedEvents();
     }
 
+    public virtual void MarkEntry(ToolStripItem menuItem, Instance relatedInstance)
+    {
+      if (MarkedInstances.Contains(relatedInstance.Name))
+        return;
+      MarkInstanceInternal(menuItem, relatedInstance);
+    }
+
     public virtual void ToggleMarking(ToolStripItem menuItem, Instance relatedInstance)
     {
       if (MarkedInstances.Contains(relatedInstance.Name))
         UnMarkInstanceInternal(menuItem, relatedInstance);
       else
         MarkInstanceInternal(menuItem, relatedInstance);
-    }
-
-    public virtual void MarkEntry(ToolStripItem menuItem, Instance relatedInstance)
-    {
-      if (MarkedInstances.Contains(relatedInstance.Name))
-        return;
-      MarkInstanceInternal(menuItem, relatedInstance);
     }
 
     public virtual void UnMarkEntry(ToolStripItem menuItem, Instance relatedInstance)
@@ -50,11 +57,47 @@ namespace TrayPluginProductivityKit.InstanceMarking
       UnMarkInstanceInternal(menuItem, relatedInstance);
     }
 
+    #endregion
+
+    #region Methods
+
+    protected virtual void MakeMenuItemMarked(ToolStripItem menuItem)
+    {
+      menuItem.Font = new Font(menuItem.Font, FontStyle.Bold);
+    }
+
+    protected virtual void MakeMenuItemUnmarked(ToolStripItem menuItem)
+    {
+      menuItem.Font = new Font(menuItem.Font, FontStyle.Regular);
+    }
+
+    protected virtual void MarkInstanceInternal(ToolStripItem menuItem, Instance relatedInstance)
+    {
+      ConstructingWaiter.Wait();
+      if (!FileSystemProvider.MarkInstance(relatedInstance))
+        return;
+      MarkedInstances.Add(relatedInstance.Name);
+      MakeMenuItemMarked(menuItem);
+    }
+
     protected virtual void OnInstanceManagerUpdated(object sender, EventArgs e)
     {
       //One time subscription
       InstanceManager.InstancesListUpdated -= OnInstanceManagerUpdated;
       Task.Factory.StartNew(PerformInitialInitialization);
+    }
+
+    protected virtual void OnMenuEntryConstructed(object sender, MenuEntryConstructedArgs args)
+    {
+      ConstructingWaiter.Wait();
+      var relatedInstance = args.Instance;
+      if (relatedInstance == null)
+        return;
+      ToolStripItem menuItem = args.ContextMenuItem;
+      if (MarkedInstances.Contains(relatedInstance.Name))
+      {
+        MakeMenuItemMarked(menuItem);
+      }
     }
 
 
@@ -79,32 +122,7 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     protected virtual void SubscribeToMenuRelatedEvents()
     {
-      MessageBus.Subscribe(StandardMessagesKinds.ContextMenuProviderEntryConstructed, OnMenuEntryConstructed);
-    }
-
-    protected virtual void OnMenuEntryConstructed(object sender, TrayPluginMessage message)
-    {
-      ConstructingWaiter.Wait();
-      var constructingParams = message.Arguments as MenuEntryConstructedMessageParams;
-      if (constructingParams == null)
-        return;
-      ToolStripItem menuItem = constructingParams.ContextMenuItem;
-      var relatedInstance = menuItem.Tag as Instance;
-      if (relatedInstance == null)
-        return;
-      if (MarkedInstances.Contains(relatedInstance.Name))
-      {
-        MakeMenuItemMarked(menuItem);
-      }
-    }
-
-    protected virtual void MarkInstanceInternal(ToolStripItem menuItem, Instance relatedInstance)
-    {
-      ConstructingWaiter.Wait();
-      if (!FileSystemProvider.MarkInstance(relatedInstance))
-        return;
-      MarkedInstances.Add(relatedInstance.Name);
-      MakeMenuItemMarked(menuItem);
+      TrayPluginEvents.ContextMenuEntryConstructed += OnMenuEntryConstructed;
     }
 
     protected virtual void UnMarkInstanceInternal(ToolStripItem menuItem, Instance relatedInstance)
@@ -115,14 +133,6 @@ namespace TrayPluginProductivityKit.InstanceMarking
       MakeMenuItemUnmarked(menuItem);
     }
 
-    protected virtual void MakeMenuItemMarked(ToolStripItem menuItem)
-    {
-      menuItem.Font = new Font(menuItem.Font, FontStyle.Bold);
-    }
-
-    protected virtual void MakeMenuItemUnmarked(ToolStripItem menuItem)
-    {
-      menuItem.Font = new Font(menuItem.Font, FontStyle.Regular);
-    }
+    #endregion
   }
 }

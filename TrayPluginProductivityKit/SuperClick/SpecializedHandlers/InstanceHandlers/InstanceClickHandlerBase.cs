@@ -17,9 +17,7 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandl
 
     protected override bool ProcessClickInternal(ClickDetailsWrapper clickDetails)
     {
-      var instance = clickDetails.ClickDetails.CustomData as Instance;
-      if (instance == null)
-        return false;
+      Instance instance = clickDetails.Instance;
       return ProcessInstanceClickInternal(instance);
     }
 

@@ -18,8 +18,8 @@ namespace TrayPluginProductivityKit.Helpers
 
     private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
     {
-      if(args.RequestingAssembly == null || args.RequestingAssembly == Assembly.GetExecutingAssembly())
-        return AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName.StartsWith(args.Name));
+      if(args.RequestingAssembly == Assembly.GetExecutingAssembly())
+        return AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName.Equals(args.Name,StringComparison.OrdinalIgnoreCase));
       return null;
     }
   }

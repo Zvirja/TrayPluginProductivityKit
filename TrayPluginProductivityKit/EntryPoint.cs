@@ -24,7 +24,7 @@ namespace TrayPluginProductivityKit
     {
       if (!IsTrayPluginAvailable())
         return;
-      //TrayPluginAssemblyResolver.Initialize(); //We don't need this ugly hack here.
+      TrayPluginAssemblyResolver.Initialize(); //We still need this resolver, because TrayPlugin assembly reference will not be resolved
       //InstanceMenuCollector.Initialize();
       MetadataManager.Initialize();
       MappingsManager.Initialize();

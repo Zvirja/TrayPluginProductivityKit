@@ -2,33 +2,51 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SIM.Tool.Plugins.TrayPlugin.Messaging.ClickMessages;
+using SIM.Instances;
+using SIM.Tool.Plugins.TrayPlugin.Common;
 using TrayPluginProductivityKit.Helpers;
 
 namespace TrayPluginProductivityKit.SuperClick
 {
   public class ClickDetailsWrapper
   {
+    #region Fields
+
     private string clickDetailsHash;
-    public MouseClickDetails ClickDetails { get; set; }
-    public bool IsInstanceClick { get; set; }
+
+    #endregion
+
+    #region Constructors and Destructors
+
+    public ClickDetailsWrapper(MouseClickInformation clickDetails, Instance instance, EventArgs rawArgs)
+    {
+      this.ClickDetails = clickDetails;
+      this.Instance = instance;
+      this.RawArgs = rawArgs;
+      this.IsInstanceClick = instance != null;
+    }
+
+    #endregion
+
+    #region Public Properties
+
+    public MouseClickInformation ClickDetails { get; set; }
 
     public string ClickDetailsHash
     {
       get
       {
-        if(clickDetailsHash != null)
-          return clickDetailsHash;
-        clickDetailsHash = ClickHelper.GetMouseClickHash(ClickDetails.MouseButton, ClickDetails.PressedKeyboardKeys,
-          IsInstanceClick);
-        return clickDetailsHash;
+        if (this.clickDetailsHash != null)
+          return this.clickDetailsHash;
+        this.clickDetailsHash = ClickHelper.GetMouseClickHash(this.ClickDetails.MouseButton, this.ClickDetails.PressedKeyboardKeys, this.IsInstanceClick);
+        return this.clickDetailsHash;
       }
     }
 
-    public ClickDetailsWrapper(MouseClickDetails clickDetails, bool isInstanceClick)
-    {
-      ClickDetails = clickDetails;
-      IsInstanceClick = isInstanceClick;
-    }
+    public Instance Instance { get; set; }
+    public bool IsInstanceClick { get; set; }
+    public EventArgs RawArgs { get; set; }
+
+    #endregion
   }
 }

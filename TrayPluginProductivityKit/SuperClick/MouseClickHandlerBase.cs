@@ -2,20 +2,47 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
-using SIM.Tool.Plugins.TrayPlugin.Messaging;
-using SIM.Tool.Plugins.TrayPlugin.Messaging.ClickMessages;
 using TrayPluginProductivityKit.Helpers;
 
 namespace TrayPluginProductivityKit.SuperClick
 {
   public class MouseClickHandlerBase
   {
+    #region Fields
+
+    private bool forInstanceClick;
     private List<Key> keyTriggers;
     private MouseButtons mouseButtonTrigger;
-    private bool forInstanceClick;
+
+    #endregion
+
+    #region Constructors and Destructors
+
+    protected MouseClickHandlerBase()
+    {
+      MouseButtonTrigger = MouseButtons.None;
+      KeyTriggers = null;
+      ForInstanceClick = false;
+      RecomputeTriggerHash();
+    }
+
+    #endregion
+
+    #region Public Properties
+
+    public string CustomParameters { get; set; }
+
+    public bool ForInstanceClick
+    {
+      get { return forInstanceClick; }
+      set
+      {
+        forInstanceClick = value;
+        RecomputeTriggerHash();
+      }
+    }
 
     public List<Key> KeyTriggers
     {
@@ -37,33 +64,31 @@ namespace TrayPluginProductivityKit.SuperClick
       }
     }
 
-    public bool ForInstanceClick
-    {
-      get { return forInstanceClick; }
-      set
-      {
-        forInstanceClick = value;
-        RecomputeTriggerHash();
-      }
-    }
-
     public string TriggerHash { get; set; }
-    public string CustomParameters { get; set; }
 
+    #endregion
 
-    protected MouseClickHandlerBase()
-    {
-      MouseButtonTrigger = MouseButtons.None;
-      KeyTriggers = null;
-      ForInstanceClick = false;
-      RecomputeTriggerHash();
-    }
+    #region Public Methods and Operators
 
-    public virtual bool ProcessClick(ClickDetailsWrapper clickDetails, TrayPluginMessage originalMessage)
+    public virtual bool ProcessClick(ClickDetailsWrapper clickDetails)
     {
       if (!MatchTriggers(clickDetails))
         return false;
-      return ProcessClickInternal(clickDetails, originalMessage);
+      return ProcessClickInternal(clickDetails);
+    }
+
+    #endregion
+
+    #region Methods
+
+    protected virtual bool MatchTriggers(ClickDetailsWrapper clickDetails)
+    {
+      return TriggerHash.Equals(clickDetails.ClickDetailsHash, StringComparison.OrdinalIgnoreCase);
+    }
+
+    protected virtual bool ProcessClickInternal(ClickDetailsWrapper clickDetails)
+    {
+      return false;
     }
 
     protected void RecomputeTriggerHash()
@@ -71,19 +96,6 @@ namespace TrayPluginProductivityKit.SuperClick
       TriggerHash = ClickHelper.GetMouseClickHash(MouseButtonTrigger, KeyTriggers, ForInstanceClick);
     }
 
-    protected virtual bool MatchTriggers(ClickDetailsWrapper clickDetails)
-    {
-      return TriggerHash.Equals(clickDetails.ClickDetailsHash, StringComparison.OrdinalIgnoreCase);
-    }
-
-    protected virtual bool ProcessClickInternal(ClickDetailsWrapper clickDetails, TrayPluginMessage originalMessage)
-    {
-      return ProcessClickInternal(clickDetails);
-    }
-
-    protected virtual bool ProcessClickInternal(ClickDetailsWrapper clickDetails)
-    {
-      return false;
-    }
+    #endregion
   }
 }

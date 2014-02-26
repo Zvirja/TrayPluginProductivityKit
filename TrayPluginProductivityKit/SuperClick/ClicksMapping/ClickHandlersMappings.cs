@@ -5,9 +5,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Input;
 using SIM.Base;
-using SIM.Tool.Plugins.TrayPlugin.Messaging;
-using SIM.Tool.Plugins.TrayPlugin.Messaging.ClickMessages;
-using TrayPluginProductivityKit.Configuration.Mappings.Metadata;
 using TrayPluginProductivityKit.SuperClick.SpecializedHandlers.FreeHandlers;
 using TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandlers;
 
@@ -15,19 +12,21 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
 {
   public class ClickHandlersMappings
   {
-    public static ClickHandlersMappings ActualMappings { get; set; }
-    public static readonly string InstanceClickKey = "InstanceClick";
-    public static readonly string TrayIconClickKey = "TrayIconClick";
-    public static readonly string ExitEntryClickKey = "ExitEntryClick";
-    public static readonly string SimEntryClickKey = "SimEntryClick";
+    #region Static Fields
 
+    public static readonly string ExitEntryClickKey = "ExitEntryClick";
+    public static readonly string InstanceClickKey = "InstanceClick";
+    public static readonly string SimEntryClickKey = "SimEntryClick";
+    public static readonly string TrayIconClickKey = "TrayIconClick";
+
+    #endregion
+
+    #region Constructors and Destructors
 
     static ClickHandlersMappings()
     {
       ActualMappings = new ClickHandlersMappings();
     }
-
-    protected Dictionary<string, List<MouseClickHandlerBase>> HandlerMappings { get; set; }
 
     public ClickHandlersMappings()
     {
@@ -35,8 +34,23 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
       InitializeMappings();
     }
 
+    #endregion
 
-    public virtual void HandleEvent(string groupKey, ClickDetailsWrapper clickDetails, TrayPluginMessage message)
+    #region Public Properties
+
+    public static ClickHandlersMappings ActualMappings { get; set; }
+
+    #endregion
+
+    #region Properties
+
+    protected Dictionary<string, List<MouseClickHandlerBase>> HandlerMappings { get; set; }
+
+    #endregion
+
+    #region Public Methods and Operators
+
+    public virtual void HandleEvent(string groupKey, ClickDetailsWrapper clickDetails)
     {
       if (groupKey.IsNullOrEmpty())
         return;
@@ -45,100 +59,14 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
       List<MouseClickHandlerBase> handlers = HandlerMappings[groupKey];
       foreach (MouseClickHandlerBase mouseClickHandlerBase in handlers)
       {
-        if (mouseClickHandlerBase.ProcessClick(clickDetails, message))
+        if (mouseClickHandlerBase.ProcessClick(clickDetails))
           return;
       }
     }
 
-    protected void InitializeMappings()
-    {
+    #endregion
 
-
-      AddMapping(TrayIconClickKey, new IISReset() { MouseButtonTrigger = MouseButtons.Middle });
-      AddMapping(TrayIconClickKey, new IISProcessIDs() { MouseButtonTrigger = MouseButtons.Middle, KeyTriggers = new List<Key> { Key.LeftCtrl } });
-
-      AddMapping(ExitEntryClickKey, new OpenPluginContainingFolderAnywhere() { MouseButtonTrigger = MouseButtons.Middle });
-
-      AddMapping(SimEntryClickKey, new InstallInstance() { MouseButtonTrigger = MouseButtons.Right });
-      AddMapping(SimEntryClickKey, new CallRefreshDialog() { MouseButtonTrigger = MouseButtons.Middle });
-      AddMapping(SimEntryClickKey, new RunShowConfigBuilder() { MouseButtonTrigger = MouseButtons.XButton1 });
-
-
-
-      AddMapping(InstanceClickKey, new RunPage() { MouseButtonTrigger = MouseButtons.Right, CustomParameters = "f|" });
-      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot() { MouseButtonTrigger = MouseButtons.Middle });
-      AddMapping(InstanceClickKey, new ToggleInstanceMarking() { MouseButtonTrigger = MouseButtons.XButton1 });
-      AddMapping(InstanceClickKey, new UninstallInstance() { MouseButtonTrigger = MouseButtons.XButton2 });
-
-      //LEFT CTRL
-      AddMapping(InstanceClickKey, new OpenVisualStudioProjectWithConfirmation()
-      {
-        MouseButtonTrigger = MouseButtons.Left,
-        KeyTriggers = new List<Key>() { Key.LeftCtrl },
-      });
-
-      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
-      {
-        MouseButtonTrigger = MouseButtons.Middle,
-        KeyTriggers = new List<Key>() { Key.LeftCtrl },
-        CustomParameters = @"Data\logs"
-      });
-
-      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
-      {
-        MouseButtonTrigger = MouseButtons.Right,
-        KeyTriggers = new List<Key>() { Key.LeftCtrl },
-        CustomParameters = @"Website\bin"
-      });
-
-
-      //LEFT SHIFT
-      AddMapping(InstanceClickKey, new RunPage()
-      {
-        MouseButtonTrigger = MouseButtons.Left,
-        KeyTriggers = new List<Key>() { Key.LeftShift },
-        CustomParameters = @"b|sitecore/admin/showconfig.aspx"
-      });
-
-      AddMapping(InstanceClickKey, new OpenCurrentLog()
-      {
-        MouseButtonTrigger = MouseButtons.Middle,
-        KeyTriggers = new List<Key>() { Key.LeftShift },
-      });
-
-      AddMapping(InstanceClickKey, new RunPage()
-      {
-        MouseButtonTrigger = MouseButtons.Right,
-        KeyTriggers = new List<Key>() { Key.LeftShift },
-        CustomParameters = @"b|sitecore/admin/cache.aspx"
-      });
-
-
-      // LEFT CTRL + SHIFT
-
-      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
-      {
-        MouseButtonTrigger = MouseButtons.Left,
-        KeyTriggers = new List<Key>() { Key.LeftShift, Key.LeftCtrl },
-        CustomParameters = @"Website\web.config"
-      });
-
-      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
-      {
-        MouseButtonTrigger = MouseButtons.Middle,
-        KeyTriggers = new List<Key>() { Key.LeftShift, Key.LeftCtrl },
-        CustomParameters = @"Website\App_config"
-      });
-
-      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
-      {
-        MouseButtonTrigger = MouseButtons.Right,
-        KeyTriggers = new List<Key>() { Key.LeftShift, Key.LeftCtrl },
-        CustomParameters = @"Website\App_config\Include"
-      });
-
-
-    }
+    #region Methods
 
     protected virtual void AddMapping(string key, MouseClickHandlerBase handler)
     {
@@ -152,5 +80,92 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
         currentHandlers = HandlerMappings[key];
       currentHandlers.Add(handler);
     }
+
+    protected void InitializeMappings()
+    {
+      AddMapping(TrayIconClickKey, new IISReset() {MouseButtonTrigger = MouseButtons.Middle});
+      AddMapping(TrayIconClickKey, new IISProcessIDs() {MouseButtonTrigger = MouseButtons.Middle, KeyTriggers = new List<Key> {Key.LeftCtrl}});
+
+      AddMapping(ExitEntryClickKey, new OpenPluginContainingFolderAnywhere() {MouseButtonTrigger = MouseButtons.Middle});
+
+      AddMapping(SimEntryClickKey, new InstallInstance() {MouseButtonTrigger = MouseButtons.Right});
+      AddMapping(SimEntryClickKey, new CallRefreshDialog() {MouseButtonTrigger = MouseButtons.Middle});
+      AddMapping(SimEntryClickKey, new RunShowConfigBuilder() {MouseButtonTrigger = MouseButtons.XButton1});
+
+
+      AddMapping(InstanceClickKey, new RunPage() {MouseButtonTrigger = MouseButtons.Right, CustomParameters = "f|"});
+      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot() {MouseButtonTrigger = MouseButtons.Middle});
+      AddMapping(InstanceClickKey, new ToggleInstanceMarking() {MouseButtonTrigger = MouseButtons.XButton1});
+      AddMapping(InstanceClickKey, new UninstallInstance() {MouseButtonTrigger = MouseButtons.XButton2});
+
+      //LEFT CTRL
+      AddMapping(InstanceClickKey, new OpenVisualStudioProjectWithConfirmation()
+      {
+        MouseButtonTrigger = MouseButtons.Left,
+        KeyTriggers = new List<Key>() {Key.LeftCtrl},
+      });
+
+      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
+      {
+        MouseButtonTrigger = MouseButtons.Middle,
+        KeyTriggers = new List<Key>() {Key.LeftCtrl},
+        CustomParameters = @"Data\logs"
+      });
+
+      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
+      {
+        MouseButtonTrigger = MouseButtons.Right,
+        KeyTriggers = new List<Key>() {Key.LeftCtrl},
+        CustomParameters = @"Website\bin"
+      });
+
+
+      //LEFT SHIFT
+      AddMapping(InstanceClickKey, new RunPage()
+      {
+        MouseButtonTrigger = MouseButtons.Left,
+        KeyTriggers = new List<Key>() {Key.LeftShift},
+        CustomParameters = @"b|sitecore/admin/showconfig.aspx"
+      });
+
+      AddMapping(InstanceClickKey, new OpenCurrentLog()
+      {
+        MouseButtonTrigger = MouseButtons.Middle,
+        KeyTriggers = new List<Key>() {Key.LeftShift},
+      });
+
+      AddMapping(InstanceClickKey, new RunPage()
+      {
+        MouseButtonTrigger = MouseButtons.Right,
+        KeyTriggers = new List<Key>() {Key.LeftShift},
+        CustomParameters = @"b|sitecore/admin/cache.aspx"
+      });
+
+
+      // LEFT CTRL + SHIFT
+
+      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
+      {
+        MouseButtonTrigger = MouseButtons.Left,
+        KeyTriggers = new List<Key>() {Key.LeftShift, Key.LeftCtrl},
+        CustomParameters = @"Website\web.config"
+      });
+
+      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
+      {
+        MouseButtonTrigger = MouseButtons.Middle,
+        KeyTriggers = new List<Key>() {Key.LeftShift, Key.LeftCtrl},
+        CustomParameters = @"Website\App_config"
+      });
+
+      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
+      {
+        MouseButtonTrigger = MouseButtons.Right,
+        KeyTriggers = new List<Key>() {Key.LeftShift, Key.LeftCtrl},
+        CustomParameters = @"Website\App_config\Include"
+      });
+    }
+
+    #endregion
   }
 }

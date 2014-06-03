@@ -30,8 +30,8 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
 
     public ClickHandlersMappings()
     {
-      HandlerMappings = new Dictionary<string, List<MouseClickHandlerBase>>();
-      InitializeMappings();
+      this.HandlerMappings = new Dictionary<string, List<MouseClickHandlerBase>>();
+      this.InitializeMappings();
     }
 
     #endregion
@@ -53,14 +53,20 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
     public virtual void HandleEvent(string groupKey, ClickDetailsWrapper clickDetails)
     {
       if (groupKey.IsNullOrEmpty())
+      {
         return;
-      if (!HandlerMappings.ContainsKey(groupKey))
+      }
+      if (!this.HandlerMappings.ContainsKey(groupKey))
+      {
         return;
-      List<MouseClickHandlerBase> handlers = HandlerMappings[groupKey];
+      }
+      List<MouseClickHandlerBase> handlers = this.HandlerMappings[groupKey];
       foreach (MouseClickHandlerBase mouseClickHandlerBase in handlers)
       {
         if (mouseClickHandlerBase.ProcessClick(clickDetails))
+        {
           return;
+        }
       }
     }
 
@@ -71,98 +77,172 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
     protected virtual void AddMapping(string key, MouseClickHandlerBase handler)
     {
       List<MouseClickHandlerBase> currentHandlers;
-      if (!HandlerMappings.ContainsKey(key))
+      if (!this.HandlerMappings.ContainsKey(key))
       {
         currentHandlers = new List<MouseClickHandlerBase>();
-        HandlerMappings.Add(key, currentHandlers);
+        this.HandlerMappings.Add(key, currentHandlers);
       }
       else
-        currentHandlers = HandlerMappings[key];
+      {
+        currentHandlers = this.HandlerMappings[key];
+      }
       currentHandlers.Add(handler);
     }
 
     protected void InitializeMappings()
     {
-      AddMapping(TrayIconClickKey, new IISReset() { MouseButtonTrigger = MouseButtons.Middle });
-      AddMapping(TrayIconClickKey, new IISProcessIDs() { MouseButtonTrigger = MouseButtons.Middle, KeyTriggers = new List<Key> { Key.LeftCtrl } });
-
-      AddMapping(ExitEntryClickKey, new OpenPluginContainingFolderAnywhere() { MouseButtonTrigger = MouseButtons.Middle });
-
-      AddMapping(SimEntryClickKey, new InstallInstance() { MouseButtonTrigger = MouseButtons.Right });
-      AddMapping(SimEntryClickKey, new CallRefreshDialog() { MouseButtonTrigger = MouseButtons.Middle });
-      AddMapping(SimEntryClickKey, new RunShowConfigBuilder() { MouseButtonTrigger = MouseButtons.XButton1 });
-
-
-      AddMapping(InstanceClickKey, new RunPage() { MouseButtonTrigger = MouseButtons.Right, CustomParameters = "f|" });
-      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot() { MouseButtonTrigger = MouseButtons.Middle });
-      AddMapping(InstanceClickKey, new ToggleInstanceMarking() { MouseButtonTrigger = MouseButtons.XButton1 });
-      AddMapping(InstanceClickKey, new MarkSingleInstanceOnly() { MouseButtonTrigger = MouseButtons.XButton1, KeyTriggers = new List<Key> { Key.LeftCtrl } });
-      AddMapping(InstanceClickKey, new UninstallInstance() { MouseButtonTrigger = MouseButtons.XButton2 });
-
-      //LEFT CTRL
-      AddMapping(InstanceClickKey, new OpenVisualStudioProjectWithConfirmation()
+      this.AddMapping(TrayIconClickKey, new IISReset()
       {
-        MouseButtonTrigger = MouseButtons.Left,
-        KeyTriggers = new List<Key>() { Key.LeftCtrl },
+        MouseButtonTrigger = MouseButtons.Middle
       });
-
-      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
+      this.AddMapping(TrayIconClickKey, new IISProcessIDs()
       {
         MouseButtonTrigger = MouseButtons.Middle,
-        KeyTriggers = new List<Key>() { Key.LeftCtrl },
+        KeyTriggers = new List<Key>
+        {
+          Key.LeftCtrl
+        }
+      });
+
+      this.AddMapping(ExitEntryClickKey, new OpenPluginContainingFolderAnywhere()
+      {
+        MouseButtonTrigger = MouseButtons.Middle
+      });
+
+      this.AddMapping(SimEntryClickKey, new InstallInstance()
+      {
+        MouseButtonTrigger = MouseButtons.Right
+      });
+      this.AddMapping(SimEntryClickKey, new CallRefreshDialog()
+      {
+        MouseButtonTrigger = MouseButtons.Middle
+      });
+      this.AddMapping(SimEntryClickKey, new RunShowConfigBuilder()
+      {
+        MouseButtonTrigger = MouseButtons.XButton1
+      });
+
+
+      this.AddMapping(InstanceClickKey, new RunPage()
+      {
+        MouseButtonTrigger = MouseButtons.Right,
+        CustomParameters = "f|"
+      });
+      this.AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
+      {
+        MouseButtonTrigger = MouseButtons.Middle
+      });
+      this.AddMapping(InstanceClickKey, new ToggleInstanceMarking()
+      {
+        MouseButtonTrigger = MouseButtons.XButton1
+      });
+      this.AddMapping(InstanceClickKey, new MarkSingleInstanceOnly()
+      {
+        MouseButtonTrigger = MouseButtons.XButton1,
+        KeyTriggers = new List<Key>
+        {
+          Key.LeftCtrl
+        }
+      });
+      this.AddMapping(InstanceClickKey, new UninstallInstance()
+      {
+        MouseButtonTrigger = MouseButtons.XButton2
+      });
+
+      //LEFT CTRL
+      this.AddMapping(InstanceClickKey, new OpenVisualStudioProjectWithConfirmation()
+      {
+        MouseButtonTrigger = MouseButtons.Left,
+        KeyTriggers = new List<Key>()
+        {
+          Key.LeftCtrl
+        },
+      });
+
+      this.AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
+      {
+        MouseButtonTrigger = MouseButtons.Middle,
+        KeyTriggers = new List<Key>()
+        {
+          Key.LeftCtrl
+        },
         CustomParameters = @"Data\logs"
       });
 
-      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
+      this.AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
       {
         MouseButtonTrigger = MouseButtons.Right,
-        KeyTriggers = new List<Key>() { Key.LeftCtrl },
+        KeyTriggers = new List<Key>()
+        {
+          Key.LeftCtrl
+        },
         CustomParameters = @"Website\bin"
       });
 
 
       //LEFT SHIFT
-      AddMapping(InstanceClickKey, new RunPage()
+      this.AddMapping(InstanceClickKey, new RunPage()
       {
         MouseButtonTrigger = MouseButtons.Left,
-        KeyTriggers = new List<Key>() { Key.LeftShift },
+        KeyTriggers = new List<Key>()
+        {
+          Key.LeftShift
+        },
         CustomParameters = @"b|sitecore/admin/showconfig.aspx"
       });
 
-      AddMapping(InstanceClickKey, new OpenCurrentLog()
+      this.AddMapping(InstanceClickKey, new OpenCurrentLog()
       {
         MouseButtonTrigger = MouseButtons.Middle,
-        KeyTriggers = new List<Key>() { Key.LeftShift },
+        KeyTriggers = new List<Key>()
+        {
+          Key.LeftShift
+        },
       });
 
-      AddMapping(InstanceClickKey, new RunPage()
+      this.AddMapping(InstanceClickKey, new RunPage()
       {
         MouseButtonTrigger = MouseButtons.Right,
-        KeyTriggers = new List<Key>() { Key.LeftShift },
+        KeyTriggers = new List<Key>()
+        {
+          Key.LeftShift
+        },
         CustomParameters = @"b|sitecore/admin/cache.aspx"
       });
 
 
       // LEFT CTRL + SHIFT
 
-      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
+      this.AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
       {
         MouseButtonTrigger = MouseButtons.Left,
-        KeyTriggers = new List<Key>() { Key.LeftShift, Key.LeftCtrl },
+        KeyTriggers = new List<Key>()
+        {
+          Key.LeftShift,
+          Key.LeftCtrl
+        },
         CustomParameters = @"Website\web.config"
       });
 
-      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
+      this.AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
       {
         MouseButtonTrigger = MouseButtons.Middle,
-        KeyTriggers = new List<Key>() { Key.LeftShift, Key.LeftCtrl },
+        KeyTriggers = new List<Key>()
+        {
+          Key.LeftShift,
+          Key.LeftCtrl
+        },
         CustomParameters = @"Website\App_config"
       });
 
-      AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
+      this.AddMapping(InstanceClickKey, new OpenFileOrFolderInsideRoot()
       {
         MouseButtonTrigger = MouseButtons.Right,
-        KeyTriggers = new List<Key>() { Key.LeftShift, Key.LeftCtrl },
+        KeyTriggers = new List<Key>()
+        {
+          Key.LeftShift,
+          Key.LeftCtrl
+        },
         CustomParameters = @"Website\App_config\Include"
       });
     }

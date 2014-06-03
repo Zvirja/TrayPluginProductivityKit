@@ -37,7 +37,9 @@ namespace TrayPluginProductivityKit.SuperClick
       get
       {
         if (this.clickDetailsHash != null)
+        {
           return this.clickDetailsHash;
+        }
         this.clickDetailsHash = ClickHelper.GetMouseClickHash(this.ClickDetails.MouseButton, this.ClickDetails.PressedKeyboardKeys, this.IsInstanceClick);
         return this.clickDetailsHash;
       }

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,83 +13,55 @@ namespace TrayPluginProductivityKit.InstancePIDs
 {
   public class ProcessIDsCustodian
   {
-    public static ProcessIDsCustodian Actual { get; set; }
+    #region Constructors and Destructors
 
     static ProcessIDsCustodian()
     {
       Actual = new ProcessIDsCustodian();
     }
 
+    public ProcessIDsCustodian()
+    {
+      this.PMonitor = new ProcessMonitor();
+      this.TasksToProcess = new Queue<Dictionary<Instance, ToolStripItem>>();
+    }
+
+    #endregion
+
+    #region Public Properties
+
+    public static ProcessIDsCustodian Actual { get; set; }
+
+    #endregion
+
+    #region Properties
+
     protected ProcessMonitor PMonitor { get; set; }
     protected Queue<Dictionary<Instance, ToolStripItem>> TasksToProcess { get; set; }
 
+    #endregion
 
-    public ProcessIDsCustodian()
-    {
-      PMonitor = new ProcessMonitor();
-      TasksToProcess = new Queue<Dictionary<Instance, ToolStripItem>>();
-    }
+    #region Public Methods and Operators
 
     public virtual void Initialize()
     {
-      PMonitor.PIDsChanged += MonitorOnPiDsChanged;
-      PMonitor.StartMonitor();
-      InstanceMenuCollector.Collector.ContextMenuUpdated += CollectorOnContextMenuUpdated;
-      StartUpdaterQueue();
+      this.PMonitor.PIDsChanged += this.MonitorOnPiDsChanged;
+      this.PMonitor.StartMonitor();
+      InstanceMenuCollector.Collector.ContextMenuUpdated += this.CollectorOnContextMenuUpdated;
+      this.StartUpdaterQueue();
     }
 
-    protected virtual void MonitorOnPiDsChanged(List<int> added, List<int> removed, List<int> allPiDs)
-    {
-      lock(TasksToProcess)
-      {
-        TasksToProcess.Enqueue(InstanceMenuCollector.Collector.ContextMenu);
-        Monitor.Pulse(TasksToProcess);
-      }
-    }
+    #endregion
+
+    #region Methods
 
     protected virtual void CollectorOnContextMenuUpdated(InstanceMenuCollector instanceMenuCollector)
     {
-      lock (TasksToProcess)
+      lock (this.TasksToProcess)
       {
-        TasksToProcess.Enqueue(instanceMenuCollector.ContextMenu);
-        Monitor.Pulse(TasksToProcess);
+        this.TasksToProcess.Enqueue(instanceMenuCollector.ContextMenu);
+        Monitor.Pulse(this.TasksToProcess);
       }
-    }
-
-    protected virtual void StartUpdaterQueue()
-    {
-      Task.Factory.StartNew(delegate
-      {
-        TasksToProcess.Enqueue(InstanceMenuCollector.Collector.ContextMenu);
-        while (true)
-        {
-          Dictionary<Instance, ToolStripItem> item;
-          lock (TasksToProcess)
-          {
-            if (TasksToProcess.Count == 0)
-            {
-              Monitor.Wait(TasksToProcess);
-              continue;
-            }
-            item = TasksToProcess.Dequeue();
-          }
-          try
-          {
-            EntirelyUpdateMenu(item);
-          }
-          catch (UnauthorizedAccessException)
-          {
-            lock (TasksToProcess)
-            {
-              TasksToProcess.Enqueue(item);
-            }
-          }
-          catch
-          {
-            
-          }
-        }
-      });
     }
 
     protected virtual void EntirelyUpdateMenu(object o)
@@ -102,7 +71,7 @@ namespace TrayPluginProductivityKit.InstancePIDs
       {
         Instance instance = keyVauePair.Key;
         ToolStripItem toolStripItem = keyVauePair.Value;
-        var cleanTooltipValue = GetCleanToolTipValue(toolStripItem.Text);
+        var cleanTooltipValue = this.GetCleanToolTipValue(toolStripItem.Text);
         var idsForInstance = instance.ProcessIds.Select(x => x.ToString(CultureInfo.InvariantCulture)).ToList();
         if (idsForInstance.Count == 0)
         {
@@ -112,7 +81,6 @@ namespace TrayPluginProductivityKit.InstancePIDs
         var idsLine = string.Join("|", idsForInstance);
         toolStripItem.Text = "{0} <<{1}>>".FormatWith(cleanTooltipValue, idsLine);
       }
-
     }
 
     protected virtual string GetCleanToolTipValue(string pollutedValue)
@@ -120,5 +88,51 @@ namespace TrayPluginProductivityKit.InstancePIDs
       var indexOf = pollutedValue.IndexOf("<<", StringComparison.OrdinalIgnoreCase);
       return indexOf < 0 ? pollutedValue : pollutedValue.Substring(0, indexOf - 1);
     }
+
+    protected virtual void MonitorOnPiDsChanged(List<int> added, List<int> removed, List<int> allPiDs)
+    {
+      lock (this.TasksToProcess)
+      {
+        this.TasksToProcess.Enqueue(InstanceMenuCollector.Collector.ContextMenu);
+        Monitor.Pulse(this.TasksToProcess);
+      }
+    }
+
+    protected virtual void StartUpdaterQueue()
+    {
+      Task.Factory.StartNew(delegate
+      {
+        this.TasksToProcess.Enqueue(InstanceMenuCollector.Collector.ContextMenu);
+        while (true)
+        {
+          Dictionary<Instance, ToolStripItem> item;
+          lock (this.TasksToProcess)
+          {
+            if (this.TasksToProcess.Count == 0)
+            {
+              Monitor.Wait(this.TasksToProcess);
+              continue;
+            }
+            item = this.TasksToProcess.Dequeue();
+          }
+          try
+          {
+            this.EntirelyUpdateMenu(item);
+          }
+          catch (UnauthorizedAccessException)
+          {
+            lock (this.TasksToProcess)
+            {
+              this.TasksToProcess.Enqueue(item);
+            }
+          }
+          catch
+          {
+          }
+        }
+      });
+    }
+
+    #endregion
   }
 }

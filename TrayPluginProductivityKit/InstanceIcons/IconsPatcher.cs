@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -11,7 +10,6 @@ using SIM.Instances;
 using SIM.Products;
 using SIM.Tool.Plugins.TrayPlugin;
 using SIM.Tool.Plugins.TrayPlugin.Resourcing;
-using SIM.Tool.Plugins.TrayPlugin.TrayIcon.ContextMenu;
 using SIM.Tool.Plugins.TrayPlugin.TrayIcon.ContextMenu.Eventing;
 
 namespace TrayPluginProductivityKit.InstanceIcons
@@ -51,11 +49,11 @@ namespace TrayPluginProductivityKit.InstanceIcons
 
     public virtual void InitializeInstance()
     {
-      TrayPluginEvents.ContextMenuEntryConstructed += OnMenuEntryConstructed;
-      ProductManager.ProductManagerInitialized += OnProductsInitialized;
-      DefaultIcon = MultisourceResourcesManager.GetIconResource("scxx", null);
-      InternalCache = new Dictionary<string, Image>();
-      ProductManagerInitialized = new ManualResetEventSlim(false);
+      TrayPluginEvents.ContextMenuEntryConstructed += this.OnMenuEntryConstructed;
+      ProductManager.ProductManagerInitialized += this.OnProductsInitialized;
+      this.DefaultIcon = MultisourceResourcesManager.GetIconResource("scxx", null);
+      this.InternalCache = new Dictionary<string, Image>();
+      this.ProductManagerInitialized = new ManualResetEventSlim(false);
     }
 
     #endregion
@@ -66,44 +64,54 @@ namespace TrayPluginProductivityKit.InstanceIcons
     {
       string version = instance.Product.ShortVersion;
       string instanceName = instance.Name;
-      Image resolvedImage = DefaultIcon != null ? DefaultIcon.ToBitmap() : null;
+      Image resolvedImage = this.DefaultIcon != null ? this.DefaultIcon.ToBitmap() : null;
       while (true)
       {
-        if (InternalCache.ContainsKey(instanceName))
-          return InternalCache[instanceName];
+        if (this.InternalCache.ContainsKey(instanceName))
+        {
+          return this.InternalCache[instanceName];
+        }
         if (version.IsNullOrEmpty())
+        {
           break;
+        }
         if (version.Length > 1)
         {
           var shortVersion = version.Substring(0, 2);
           var resolvedIcon = MultisourceResourcesManager.GetIconResource("sc" + shortVersion, null);
           if (resolvedIcon != null)
+          {
             resolvedImage = resolvedIcon.ToBitmap();
+          }
         }
         break;
       }
 
-      InternalCache.Add(instanceName, resolvedImage);
+      this.InternalCache.Add(instanceName, resolvedImage);
       return resolvedImage;
     }
 
     protected virtual void OnMenuEntryConstructed(object sender, MenuEntryConstructedArgs args)
     {
       //Product manager is initialized after this method is usually called. Because of that tray icons might be broken.
-      ProductManagerInitialized.Wait();
+      this.ProductManagerInitialized.Wait();
       var relatedInstance = args.Instance;
       if (relatedInstance == null)
+      {
         return;
+      }
       ToolStripItem menuItem = args.ContextMenuItem;
-      var icon = GetIconForInstance(relatedInstance);
+      var icon = this.GetIconForInstance(relatedInstance);
       if (icon == null)
+      {
         return;
+      }
       menuItem.Image = icon;
     }
 
     protected virtual void OnProductsInitialized()
     {
-      ProductManagerInitialized.Set();
+      this.ProductManagerInitialized.Set();
     }
 
     #endregion

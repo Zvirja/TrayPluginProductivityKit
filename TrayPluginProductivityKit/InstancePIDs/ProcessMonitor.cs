@@ -10,55 +10,73 @@ namespace TrayPluginProductivityKit.InstancePIDs
 {
   public class ProcessMonitor
   {
-    public delegate void ActiveProcessesChanged(List<int> added, List<int> removed, List<int> allPIDs);
-
-    protected CancellationTokenSource CancellationTokenSource { get; set; }
+    #region Fields
 
     public volatile int WorkLoopIntervalMsec;
-    public event ActiveProcessesChanged PIDsChanged;
-    public List<int> PIDs { get; set; }
+
+    #endregion
+
+    #region Constructors and Destructors
 
     public ProcessMonitor()
     {
-      WorkLoopIntervalMsec = 1000;
-      PIDs = new List<int>();
+      this.WorkLoopIntervalMsec = 1000;
+      this.PIDs = new List<int>();
     }
+
+    #endregion
+
+    #region Delegates
+
+    public delegate void ActiveProcessesChanged(List<int> added, List<int> removed, List<int> allPIDs);
+
+    #endregion
+
+    #region Public Events
+
+    public event ActiveProcessesChanged PIDsChanged;
+
+    #endregion
+
+    #region Public Properties
+
+    public List<int> PIDs { get; set; }
+
+    #endregion
+
+    #region Properties
+
+    protected CancellationTokenSource CancellationTokenSource { get; set; }
+
+    #endregion
+
+    #region Public Methods and Operators
 
     public virtual void StartMonitor()
     {
-      StartWorkingThread();
+      this.StartWorkingThread();
     }
 
     public virtual void StopMonitor()
     {
-      if (CancellationTokenSource == null)
+      if (this.CancellationTokenSource == null)
+      {
         return;
-      CancellationTokenSource.Cancel();
-      CancellationTokenSource = null;
+      }
+      this.CancellationTokenSource.Cancel();
+      this.CancellationTokenSource = null;
     }
 
-    protected virtual void StartWorkingThread()
-    {
-      if (CancellationTokenSource != null)
-        return;
-      CancellationTokenSource = new CancellationTokenSource();
-      Task.Factory.StartNew(WorkingLoop, CancellationTokenSource.Token, CancellationTokenSource.Token);
-    }
+    #endregion
 
-    protected virtual void WorkingLoop(object tokenObj)
+    #region Methods
+
+    protected virtual void OnPiDsChanged(List<int> added, List<int> removed, List<int> allpids)
     {
-      var token = (CancellationToken)tokenObj;
-      while (!token.IsCancellationRequested)
-      { 
-        try
-        {
-          ProcessQueue();
-        }
-        catch
-        {
-          
-        }
-        Thread.Sleep(WorkLoopIntervalMsec);
+      ActiveProcessesChanged handler = this.PIDsChanged;
+      if (handler != null)
+      {
+        handler(added, removed, allpids);
       }
     }
 
@@ -66,17 +84,41 @@ namespace TrayPluginProductivityKit.InstancePIDs
     {
       Process[] processes = Process.GetProcessesByName("w3wp");
       var pids = processes.Select(x => x.Id).ToList();
-      var created = pids.Except(PIDs).ToList();
-      var removed = PIDs.Except(pids).ToList();
-      PIDs = pids;
-      if(created.Count !=0 || removed.Count != 0)
-        OnPiDsChanged(created, removed, pids);
+      var created = pids.Except(this.PIDs).ToList();
+      var removed = this.PIDs.Except(pids).ToList();
+      this.PIDs = pids;
+      if (created.Count != 0 || removed.Count != 0)
+      {
+        this.OnPiDsChanged(created, removed, pids);
+      }
     }
 
-    protected virtual void OnPiDsChanged(List<int> added, List<int> removed, List<int> allpids)
+    protected virtual void StartWorkingThread()
     {
-      ActiveProcessesChanged handler = PIDsChanged;
-      if (handler != null) handler(added, removed, allpids);
+      if (this.CancellationTokenSource != null)
+      {
+        return;
+      }
+      this.CancellationTokenSource = new CancellationTokenSource();
+      Task.Factory.StartNew(this.WorkingLoop, this.CancellationTokenSource.Token, this.CancellationTokenSource.Token);
     }
+
+    protected virtual void WorkingLoop(object tokenObj)
+    {
+      var token = (CancellationToken)tokenObj;
+      while (!token.IsCancellationRequested)
+      {
+        try
+        {
+          this.ProcessQueue();
+        }
+        catch
+        {
+        }
+        Thread.Sleep(this.WorkLoopIntervalMsec);
+      }
+    }
+
+    #endregion
   }
 }

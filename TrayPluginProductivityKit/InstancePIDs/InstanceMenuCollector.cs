@@ -56,11 +56,11 @@ namespace TrayPluginProductivityKit.InstancePIDs
 
     public void InitializeInstance()
     {
-      CurrentState = CollectorState.MenuBuilded;
-      ContextMenu = new Dictionary<Instance, ToolStripItem>();
-      IsUnderConstruction = false;
-      TrayPluginEvents.ContextMenuEntryConstructed += OnMenuEntryConstructed;
-      TrayPluginEvents.ContextMenuConstructed += OnContextMenuConstructed;
+      this.CurrentState = CollectorState.MenuBuilded;
+      this.ContextMenu = new Dictionary<Instance, ToolStripItem>();
+      this.IsUnderConstruction = false;
+      TrayPluginEvents.ContextMenuEntryConstructed += this.OnMenuEntryConstructed;
+      TrayPluginEvents.ContextMenuConstructed += this.OnContextMenuConstructed;
     }
 
     #endregion
@@ -71,37 +71,46 @@ namespace TrayPluginProductivityKit.InstancePIDs
     {
       ToolStripItem menuItem = args.ContextMenuItem;
       if (args.Position != MenuEntryPosition.BodyEntry)
+      {
         return;
+      }
       var relatedInstance = args.Instance;
       if (relatedInstance == null)
+      {
         throw new InvalidDataException("menuItem.Tag is not Instance or is null");
-      ContextMenu[relatedInstance] = menuItem;
+      }
+      this.ContextMenu[relatedInstance] = menuItem;
     }
 
     protected virtual void OnContextMenuConstructed(object sender, ConstructedMenuArgs args)
     {
-      if (CurrentState == CollectorState.MenuBuilded)
+      if (this.CurrentState == CollectorState.MenuBuilded)
+      {
         throw new Exception("State inconsistency");
-      CurrentState = CollectorState.MenuBuilded;
-      IsUnderConstruction = false;
-      OnContextMenuUpdated();
+      }
+      this.CurrentState = CollectorState.MenuBuilded;
+      this.IsUnderConstruction = false;
+      this.OnContextMenuUpdated();
     }
 
     protected virtual void OnContextMenuUpdated()
     {
-      Action<InstanceMenuCollector> handler = ContextMenuUpdated;
-      if (handler != null) handler(this);
+      Action<InstanceMenuCollector> handler = this.ContextMenuUpdated;
+      if (handler != null)
+      {
+        handler(this);
+      }
     }
 
     protected virtual void OnMenuEntryConstructed(object sender, MenuEntryConstructedArgs args)
     {
-      if (CurrentState == CollectorState.MenuBuilded)
+      if (this.CurrentState == CollectorState.MenuBuilded)
       {
-        IsUnderConstruction = true;
-        ContextMenu = new Dictionary<Instance, ToolStripItem>();
-        CurrentState = CollectorState.MenuBuilding;
+        this.IsUnderConstruction = true;
+        this.ContextMenu = new Dictionary<Instance, ToolStripItem>();
+        this.CurrentState = CollectorState.MenuBuilding;
       }
-      AddInstanceEntry(args);
+      this.AddInstanceEntry(args);
     }
 
     #endregion

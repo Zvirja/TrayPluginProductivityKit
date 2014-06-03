@@ -6,25 +6,24 @@ using System.Text;
 using System.Windows.Forms;
 using SIM.Base;
 using SIM.Instances;
-using SIM.Tool.Base;
 using TrayPluginProductivityKit.Helpers;
 
 namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandlers
 {
   public class OpenFileOrFolderInsideRoot : InstanceClickHandlerBase
   {
-    protected override bool ProcessInstanceClickInternal(Instance instance)
-    {
-      var path = GetPathToOpen(instance.RootPath);
-      return OpenFileOrFolder(path);
-    }
+    #region Methods
 
     protected virtual string GetPathToOpen(string instanceRootPath)
     {
       if (CustomParameters != null && CustomParameters.Trim().IndexOf(':') > -1)
+      {
         return instanceRootPath;
+      }
       if (CustomParameters.IsNullOrEmpty())
+      {
         return instanceRootPath;
+      }
       return Path.Combine(instanceRootPath, CustomParameters);
     }
 
@@ -35,8 +34,18 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandl
         OSShellHelper.OpenInExplorer(path);
       }
       else
-        OSShellHelper.ShowMessage("File or folder {0} doesn't exist".FormatWith(path),"Doesn't exist error",MessageBoxIcon.Error);
+      {
+        OSShellHelper.ShowMessage("File or folder {0} doesn't exist".FormatWith(path), "Doesn't exist error", MessageBoxIcon.Error);
+      }
       return true;
     }
+
+    protected override bool ProcessInstanceClickInternal(Instance instance)
+    {
+      var path = this.GetPathToOpen(instance.RootPath);
+      return this.OpenFileOrFolder(path);
+    }
+
+    #endregion
   }
 }

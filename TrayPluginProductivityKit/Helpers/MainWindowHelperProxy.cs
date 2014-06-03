@@ -8,7 +8,10 @@ namespace TrayPluginProductivityKit.Helpers
 {
   public class MainWindowHelperProxy
   {
+    #region Static Fields
+
     public static Type MainWindowHelperType = Assembly.GetEntryAssembly().GetType("SIM.Tool.Windows.MainWindowHelper", false);
 
+    #endregion
   }
 }

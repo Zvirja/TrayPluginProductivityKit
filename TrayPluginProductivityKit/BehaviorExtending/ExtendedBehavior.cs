@@ -14,7 +14,7 @@ namespace TrayPluginProductivityKit.BehaviorExtending
     protected override void AttachToEvents()
     {
       base.AttachToEvents();
-      AttachToExtendedEvents();
+      this.AttachToExtendedEvents();
     }
 
     protected virtual void AttachToExtendedEvents()
@@ -28,7 +28,7 @@ namespace TrayPluginProductivityKit.BehaviorExtending
     protected override void DetachFromEvents()
     {
       base.DetachFromEvents();
-      DetachFromExtendedEvents();
+      this.DetachFromExtendedEvents();
     }
 
     protected virtual void DetachFromExtendedEvents()

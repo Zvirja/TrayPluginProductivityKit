@@ -15,10 +15,14 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandl
     {
       var castedArgs = clickDetails.RawArgs as InstanceEntryClickArgs;
       if (castedArgs == null)
+      {
         return false;
+      }
       var toolStripItem = castedArgs.ToolStripItem;
       if (toolStripItem == null)
+      {
         return false;
+      }
       var instance = clickDetails.Instance;
       MarkingManager.ToggleInstanceMarking(toolStripItem, instance);
       return true;

@@ -16,10 +16,14 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandl
     {
       var castedArgs = clickDetails.RawArgs as InstanceEntryClickArgs;
       if (castedArgs == null)
+      {
         return false;
+      }
       ToolStripItem toolStripItem = castedArgs.ToolStripItem;
       if (toolStripItem == null)
+      {
         return false;
+      }
       var instance = clickDetails.Instance;
       MarkingManager.MarkSingleInstanceOnly(toolStripItem, instance);
       return true;

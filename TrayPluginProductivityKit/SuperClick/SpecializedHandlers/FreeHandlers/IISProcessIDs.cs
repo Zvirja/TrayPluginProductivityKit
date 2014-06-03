@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Windows.Input;
 using SIM.Base;
 using TrayPluginProductivityKit.Helpers;
 
@@ -12,7 +11,13 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.FreeHandlers
 {
   public class IISProcessIDs : FreeClickHandlerBase
   {
+    #region Static Fields
+
     protected static readonly string DialogLabel = "SIM - Run instance PIDs";
+
+    #endregion
+
+    #region Methods
 
     protected override bool ProcessClickInternal(ClickDetailsWrapper clickDetails)
     {
@@ -28,10 +33,14 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.FreeHandlers
         proc.WaitForExit();
         var output = proc.StandardOutput.ReadToEnd();
         if (output.IsNullOrEmpty())
+        {
           OSShellHelper.ShowMessage("No run instances", DialogLabel);
+        }
         else
+        {
           OSShellHelper.ShowMessage(output.Trim(), DialogLabel);
-        return true; 
+        }
+        return true;
       }
       catch (Exception ex)
       {
@@ -40,5 +49,7 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.FreeHandlers
         return true;
       }
     }
+
+    #endregion
   }
 }

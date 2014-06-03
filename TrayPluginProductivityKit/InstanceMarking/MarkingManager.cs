@@ -9,7 +9,13 @@ namespace TrayPluginProductivityKit.InstanceMarking
 {
   public class MarkingManager
   {
+    #region Public Properties
+
     public static MarkingProvider ActualProvider { get; set; }
+
+    #endregion
+
+    #region Public Methods and Operators
 
     public static void Initialize()
     {
@@ -19,12 +25,12 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     public static void MarkInstance(ToolStripItem menuItem, Instance instance)
     {
-      ActualProvider.MarkEntry(menuItem,instance);
+      ActualProvider.MarkEntry(menuItem, instance);
     }
 
-    public static void UnMarkInstance(ToolStripItem menuItem, Instance instance)
+    public static void MarkSingleInstanceOnly(ToolStripItem menuItem, Instance instance)
     {
-      ActualProvider.UnMarkEntry(menuItem, instance);
+      ActualProvider.MarkSingleInstanceOnly(menuItem, instance);
     }
 
     public static void ToggleInstanceMarking(ToolStripItem menuItem, Instance instance)
@@ -32,9 +38,11 @@ namespace TrayPluginProductivityKit.InstanceMarking
       ActualProvider.ToggleMarking(menuItem, instance);
     }
 
-    public static void MarkSingleInstanceOnly(ToolStripItem menuItem, Instance instance)
+    public static void UnMarkInstance(ToolStripItem menuItem, Instance instance)
     {
-      ActualProvider.MarkSingleInstanceOnly(menuItem, instance);
+      ActualProvider.UnMarkEntry(menuItem, instance);
     }
+
+    #endregion
   }
 }

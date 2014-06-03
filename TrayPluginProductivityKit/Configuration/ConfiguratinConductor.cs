@@ -11,6 +11,8 @@ namespace TrayPluginProductivityKit.Configuration
 {
   public static class ConfiguratinConductor
   {
+    #region Public Properties
+
     public static XmlDocument ProductivityKitConfig
     {
       get
@@ -28,9 +30,9 @@ namespace TrayPluginProductivityKit.Configuration
         {
           return null;
         }
-        
       }
     }
 
+    #endregion
   }
 }

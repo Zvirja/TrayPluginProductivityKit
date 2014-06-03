@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Windows;
 using SIM.Tool.Base.Plugins;
@@ -12,18 +10,20 @@ using TrayPluginProductivityKit.Configuration.Mappings.Metadata;
 using TrayPluginProductivityKit.Helpers;
 using TrayPluginProductivityKit.InstanceIcons;
 using TrayPluginProductivityKit.InstanceMarking;
-using TrayPluginProductivityKit.InstancePIDs;
 using TrayPluginProductivityKit.Resources;
 
 namespace TrayPluginProductivityKit
 {
   public class EntryPoint : IInitProcessor, IMainWindowLoadedProcessor
   {
+    #region Public Methods and Operators
 
     public void Process()
     {
-      if (!IsTrayPluginAvailable())
+      if (!this.IsTrayPluginAvailable())
+      {
         return;
+      }
       TrayPluginAssemblyResolver.Initialize(); //We still need this resolver, because TrayPlugin assembly reference will not be resolved
       //InstanceMenuCollector.Initialize();
       MetadataManager.Initialize();
@@ -35,14 +35,20 @@ namespace TrayPluginProductivityKit
       //ProcessIDsCustodian.Actual.Initialize();
     }
 
+    public void Process(Window mainWindow)
+    {
+      SIMDialogsInteractionHelper.SaveMainWindowReference(mainWindow);
+    }
+
+    #endregion
+
+    #region Methods
+
     protected virtual bool IsTrayPluginAvailable()
     {
       return AppDomain.CurrentDomain.GetAssemblies().Any(x => x.FullName.Contains("SIM.Tool.Plugins.TrayPlugin"));
     }
 
-    public void Process(Window mainWindow)
-    {
-      SIMDialogsInteractionHelper.SaveMainWindowReference(mainWindow);
-    }
+    #endregion
   }
 }

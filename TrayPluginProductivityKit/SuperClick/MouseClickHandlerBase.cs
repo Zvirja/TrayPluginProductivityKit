@@ -22,10 +22,10 @@ namespace TrayPluginProductivityKit.SuperClick
 
     protected MouseClickHandlerBase()
     {
-      MouseButtonTrigger = MouseButtons.None;
-      KeyTriggers = null;
-      ForInstanceClick = false;
-      RecomputeTriggerHash();
+      this.MouseButtonTrigger = MouseButtons.None;
+      this.KeyTriggers = null;
+      this.ForInstanceClick = false;
+      this.RecomputeTriggerHash();
     }
 
     #endregion
@@ -36,31 +36,40 @@ namespace TrayPluginProductivityKit.SuperClick
 
     public bool ForInstanceClick
     {
-      get { return forInstanceClick; }
+      get
+      {
+        return this.forInstanceClick;
+      }
       set
       {
-        forInstanceClick = value;
-        RecomputeTriggerHash();
+        this.forInstanceClick = value;
+        this.RecomputeTriggerHash();
       }
     }
 
     public List<Key> KeyTriggers
     {
-      get { return keyTriggers; }
+      get
+      {
+        return this.keyTriggers;
+      }
       set
       {
-        keyTriggers = value;
-        RecomputeTriggerHash();
+        this.keyTriggers = value;
+        this.RecomputeTriggerHash();
       }
     }
 
     public MouseButtons MouseButtonTrigger
     {
-      get { return mouseButtonTrigger; }
+      get
+      {
+        return this.mouseButtonTrigger;
+      }
       set
       {
-        mouseButtonTrigger = value;
-        RecomputeTriggerHash();
+        this.mouseButtonTrigger = value;
+        this.RecomputeTriggerHash();
       }
     }
 
@@ -72,9 +81,11 @@ namespace TrayPluginProductivityKit.SuperClick
 
     public virtual bool ProcessClick(ClickDetailsWrapper clickDetails)
     {
-      if (!MatchTriggers(clickDetails))
+      if (!this.MatchTriggers(clickDetails))
+      {
         return false;
-      return ProcessClickInternal(clickDetails);
+      }
+      return this.ProcessClickInternal(clickDetails);
     }
 
     #endregion
@@ -83,7 +94,7 @@ namespace TrayPluginProductivityKit.SuperClick
 
     protected virtual bool MatchTriggers(ClickDetailsWrapper clickDetails)
     {
-      return TriggerHash.Equals(clickDetails.ClickDetailsHash, StringComparison.OrdinalIgnoreCase);
+      return this.TriggerHash.Equals(clickDetails.ClickDetailsHash, StringComparison.OrdinalIgnoreCase);
     }
 
     protected virtual bool ProcessClickInternal(ClickDetailsWrapper clickDetails)
@@ -93,7 +104,7 @@ namespace TrayPluginProductivityKit.SuperClick
 
     protected void RecomputeTriggerHash()
     {
-      TriggerHash = ClickHelper.GetMouseClickHash(MouseButtonTrigger, KeyTriggers, ForInstanceClick);
+      this.TriggerHash = ClickHelper.GetMouseClickHash(this.MouseButtonTrigger, this.KeyTriggers, this.ForInstanceClick);
     }
 
     #endregion

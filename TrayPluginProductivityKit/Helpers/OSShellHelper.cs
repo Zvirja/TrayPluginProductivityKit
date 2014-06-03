@@ -10,11 +10,7 @@ namespace TrayPluginProductivityKit.Helpers
 {
   public static class OSShellHelper
   {
-    public static void OpenInExplorer(string folderPath)
-    {
-      var args = folderPath;
-      Process.Start("explorer.exe", args);
-    }
+    #region Public Methods and Operators
 
     public static bool ConfirmFileRun(string path)
     {
@@ -23,9 +19,17 @@ namespace TrayPluginProductivityKit.Helpers
         MessageBoxIcon.Question) == DialogResult.Yes;
     }
 
+    public static void OpenInExplorer(string folderPath)
+    {
+      var args = folderPath;
+      Process.Start("explorer.exe", args);
+    }
+
     public static void ShowMessage(string text, string header, MessageBoxIcon icon = MessageBoxIcon.Information)
     {
       MessageBox.Show(text, header, MessageBoxButtons.OK, icon);
     }
+
+    #endregion
   }
 }

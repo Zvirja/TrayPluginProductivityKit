@@ -15,7 +15,10 @@ namespace TrayPluginProductivityKit.SuperClick
 
     protected ClickHandlersMappings ActualMappings
     {
-      get { return ClickHandlersMappings.ActualMappings; }
+      get
+      {
+        return ClickHandlersMappings.ActualMappings;
+      }
     }
 
     #endregion
@@ -44,7 +47,9 @@ namespace TrayPluginProductivityKit.SuperClick
     {
       MouseClickInformation clickDetails = args.ClickInformation;
       if (clickDetails.MouseButton == MouseButtons.Right)
+      {
         return;
+      }
       this.ActualMappings.HandleEvent(ClickHandlersMappings.TrayIconClickKey, new ClickDetailsWrapper(clickDetails, null, args));
     }
 

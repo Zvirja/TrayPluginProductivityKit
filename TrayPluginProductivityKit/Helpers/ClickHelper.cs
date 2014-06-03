@@ -9,6 +9,8 @@ namespace TrayPluginProductivityKit.Helpers
 {
   public static class ClickHelper
   {
+    #region Public Methods and Operators
+
     public static string GetMouseClickHash(MouseButtons mouseButton, List<Key> keys, bool isInstanceClick)
     {
       var result = new StringBuilder();
@@ -20,9 +22,11 @@ namespace TrayPluginProductivityKit.Helpers
           result.Append(key);
         }
       }
-        
+
       result.Append(isInstanceClick);
       return result.ToString();
     }
+
+    #endregion
   }
 }

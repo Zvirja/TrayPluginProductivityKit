@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SIM.Base;
 using SIM.Instances;
 using SIM.Tool.Plugins.TrayPlugin;
 using SIM.Tool.Plugins.TrayPlugin.TrayIcon.ContextMenu;
@@ -20,7 +21,7 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     protected ManualResetEventSlim ConstructingWaiter { get; set; }
     protected FilesystemMarkingProvider FileSystemProvider { get; set; }
-    protected List<string> MarkedInstances { get; set; }
+    protected Dictionary<string,MarkedInstance> MarkedInstances { get; set; }
 
     #endregion
 
@@ -37,14 +38,16 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     public virtual void MarkEntry(ToolStripItem menuItem, Instance relatedInstance)
     {
-      if (MarkedInstances.Contains(relatedInstance.Name))
+      ConstructingWaiter.Wait();
+      if (MarkedInstances.ContainsKey(relatedInstance.Name))
         return;
       MarkInstanceInternal(menuItem, relatedInstance);
     }
 
     public virtual void ToggleMarking(ToolStripItem menuItem, Instance relatedInstance)
     {
-      if (MarkedInstances.Contains(relatedInstance.Name))
+      ConstructingWaiter.Wait();
+      if (MarkedInstances.ContainsKey(relatedInstance.Name))
         UnMarkInstanceInternal(menuItem, relatedInstance);
       else
         MarkInstanceInternal(menuItem, relatedInstance);
@@ -52,7 +55,8 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     public virtual void UnMarkEntry(ToolStripItem menuItem, Instance relatedInstance)
     {
-      if (!MarkedInstances.Contains(relatedInstance.Name))
+      ConstructingWaiter.Wait();
+      if (!MarkedInstances.ContainsKey(relatedInstance.Name))
         return;
       UnMarkInstanceInternal(menuItem, relatedInstance);
     }
@@ -73,11 +77,10 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     protected virtual void MarkInstanceInternal(ToolStripItem menuItem, Instance relatedInstance)
     {
-      ConstructingWaiter.Wait();
       if (!FileSystemProvider.MarkInstance(relatedInstance))
         return;
-      MarkedInstances.Add(relatedInstance.Name);
       MakeMenuItemMarked(menuItem);
+      MarkedInstances.Add(relatedInstance.Name, new MarkedInstance(relatedInstance, menuItem));
     }
 
     protected virtual void OnInstanceManagerUpdated(object sender, EventArgs e)
@@ -94,23 +97,25 @@ namespace TrayPluginProductivityKit.InstanceMarking
       if (relatedInstance == null)
         return;
       ToolStripItem menuItem = args.ContextMenuItem;
-      if (MarkedInstances.Contains(relatedInstance.Name))
+      if (MarkedInstances.ContainsKey(relatedInstance.Name))
       {
+        MarkedInstance markedInstance = this.MarkedInstances[relatedInstance.Name];
         MakeMenuItemMarked(menuItem);
+        markedInstance.LastKnownToolstrip = menuItem;
       }
     }
 
 
     protected virtual void PerformInitialInitialization()
     {
-      var markedInstances = new List<string>();
+      var markedInstances = new Dictionary<string, MarkedInstance>();
       try
       {
         IEnumerable<Instance> instances = InstanceManager.PartiallyCachedInstances;
         foreach (Instance instance in instances)
         {
           if (FileSystemProvider.IsInstanceMarked(instance))
-            markedInstances.Add(instance.Name);
+            markedInstances.Add(instance.Name, new MarkedInstance(instance, null));
         }
       }
       finally
@@ -127,12 +132,46 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     protected virtual void UnMarkInstanceInternal(ToolStripItem menuItem, Instance relatedInstance)
     {
-      ConstructingWaiter.Wait();
       FileSystemProvider.UnMarkInstance(relatedInstance);
-      MarkedInstances.Remove(relatedInstance.Name);
       MakeMenuItemUnmarked(menuItem);
+      MarkedInstances.Remove(relatedInstance.Name);
     }
 
     #endregion
+
+    public void MarkSingleInstanceOnly(ToolStripItem menuItem, Instance instance)
+    {
+      this.ConstructingWaiter.Wait();
+
+      string instanceName = instance.Name;
+
+      bool needMark = true;
+
+      Dictionary<string, MarkedInstance> markedInstancesCopy = this.MarkedInstances.ToDictionary(pair => pair.Key, pair => pair.Value);
+
+      foreach (var markedInstance in markedInstancesCopy)
+      {
+        if (markedInstance.Key.EqualsIgnoreCase(instanceName))
+        {
+          needMark = false;
+          this.MarkedInstances[markedInstance.Key].LastKnownToolstrip = menuItem;
+        }
+        else
+        {
+          //We don't have that information initially. So perform a check.
+          MarkedInstance instanceInfo = markedInstance.Value;
+          if (instanceInfo.LastKnownToolstrip != null)
+          {
+            this.UnMarkInstanceInternal(instanceInfo.LastKnownToolstrip, instanceInfo.Instance);            
+          }
+        }
+      }
+
+      if (needMark)
+      {
+        this.MarkInstanceInternal(menuItem, instance); 
+      }
+
+    }
   }
 }

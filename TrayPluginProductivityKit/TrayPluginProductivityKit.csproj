@@ -125,6 +125,7 @@
     <Compile Include="Helpers\TrayPluginAssemblyResolver.cs" />
     <Compile Include="InstanceIcons\IconsPatcher.cs" />
     <Compile Include="InstanceMarking\FilesystemMarkingProvider.cs" />
+    <Compile Include="InstanceMarking\MarkedInstance.cs" />
     <Compile Include="InstanceMarking\MarkingManager.cs" />
     <Compile Include="InstanceMarking\MarkingProvider.cs" />
     <Compile Include="InstancePIDs\CollectorState.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="SuperClick\SpecializedHandlers\FreeHandlers\OpenFileOrFolderAnywhereWithConfirmation.cs" />
     <Compile Include="SuperClick\SpecializedHandlers\FreeHandlers\OpenSIMWindow.cs" />
     <Compile Include="SuperClick\SpecializedHandlers\FreeHandlers\RunShowConfigBuilder.cs" />
+    <Compile Include="SuperClick\SpecializedHandlers\InstanceHandlers\MarkSingleInstanceOnly.cs" />
     <Compile Include="SuperClick\SpecializedHandlers\InstanceHandlers\OpenVisualStudioProjectWithConfirmation.cs" />
     <Compile Include="SuperClick\SpecializedHandlers\InstanceHandlers\OpenVisualStudioProject.cs" />
     <Compile Include="SuperClick\SpecializedHandlers\InstanceHandlers\OpenCurrentLog.cs" />

@@ -31,5 +31,10 @@ namespace TrayPluginProductivityKit.InstanceMarking
     {
       ActualProvider.ToggleMarking(menuItem, instance);
     }
+
+    public static void MarkSingleInstanceOnly(ToolStripItem menuItem, Instance instance)
+    {
+      ActualProvider.MarkSingleInstanceOnly(menuItem, instance);
+    }
   }
 }

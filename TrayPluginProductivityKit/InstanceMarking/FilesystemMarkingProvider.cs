@@ -11,6 +11,22 @@ namespace TrayPluginProductivityKit.InstanceMarking
 {
   public class FilesystemMarkingProvider
   {
+    #region Enums
+
+    [Flags]
+    public enum FOLDERCUSTOMSETTINGSMASK : uint
+    {
+      FCSM_VIEWID = 0x0001,
+      FCSM_WEBVIEWTEMPLATE = 0x0002,
+      FCSM_INFOTIP = 0x0004,
+      FCSM_CLSID = 0x0008,
+      FCSM_ICONFILE = 0x0010,
+      FCSM_LOGO = 0x0020,
+      FCSM_FLAGS = 0x0040,
+    }
+
+    #endregion
+
     #region Public Methods and Operators
 
     public virtual bool IsInstanceMarked(Instance instance)
@@ -40,25 +56,27 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     #region Methods
 
-    [DllImport("Shell32.dll", CharSet = CharSet.Auto)]
-    protected static extern UInt32 SHGetSetFolderCustomSettings(ref LPSHFOLDERCUSTOMSETTINGS pfcs, string pszPath,
-      UInt32 dwReadWrite);
+    [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+    protected static extern UInt32 SHGetSetFolderCustomSettings(ref SHFOLDERCUSTOMSETTINGS pfcs, [MarshalAs(UnmanagedType.LPWStr)] string pszPath, UInt32 dwReadWrite);
 
     protected virtual bool ChangeFolderIconNative(string folderPath, string iconPath)
     {
-      LPSHFOLDERCUSTOMSETTINGS FolderSettings = new LPSHFOLDERCUSTOMSETTINGS();
-      FolderSettings.dwMask = 0x10;
+      SHFOLDERCUSTOMSETTINGS folderSettings = new SHFOLDERCUSTOMSETTINGS();
+      folderSettings.dwMask = FOLDERCUSTOMSETTINGSMASK.FCSM_ICONFILE;
+
+      folderSettings.dwSize = (uint)Marshal.SizeOf(typeof(SHFOLDERCUSTOMSETTINGS));
       if (!string.IsNullOrEmpty(iconPath))
       {
-        FolderSettings.pszIconFile = iconPath;
-        FolderSettings.iIconIndex = 0;
+        folderSettings.pszIconFile = iconPath;
+        folderSettings.iIconIndex = 0;
+        folderSettings.cchIconFile = 0;
       }
       UInt32 FCS_READ = 0x00000001;
       UInt32 FCS_FORCEWRITE = 0x00000002;
-      UInt32 FCS_WRITE = FCS_READ | FCS_FORCEWRITE;
+      UInt32 FCS_WRITE = FCS_FORCEWRITE;
 
       string pszPath = folderPath;
-      UInt32 HRESULT = SHGetSetFolderCustomSettings(ref FolderSettings, pszPath, FCS_WRITE);
+      UInt32 HRESULT = SHGetSetFolderCustomSettings(ref folderSettings, pszPath, FCS_WRITE);
       return HRESULT == 0;
     }
 
@@ -113,26 +131,71 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     #endregion
 
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-    protected struct LPSHFOLDERCUSTOMSETTINGS
+    /*
+     [StructLayout(LayoutKind.Sequential,CharSet = CharSet.Unicode)]
+    public struct SHFOLDERCUSTOMSETTINGS
+    {
+      public uint dwSize;
+      public FOLDERCUSTOMSETTINGSMASK dwMask;
+      public IntPtr pvid;
+
+      [MarshalAs(UnmanagedType.LPWStr)]
+      public string pszWebViewTemplate;
+      public uint cchWebViewTemplate;
+
+      [MarshalAs(UnmanagedType.LPWStr)]
+      public string pszWebViewTemplateVersion;
+
+      [MarshalAs(UnmanagedType.LPWStr)]
+      public string pszInfoTip;
+      public uint cchInfoTip;
+
+      public IntPtr pclsid;
+      public uint dwFlags;
+
+      [MarshalAs(UnmanagedType.LPWStr)]
+      public string pszIconFile;
+      public uint cchIconFile;
+      public uint iIconIndex;
+
+      [MarshalAs(UnmanagedType.LPWStr)]
+      public string pszLogo;
+      public uint cchLogo;
+    }
+     
+     */
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    public struct SHFOLDERCUSTOMSETTINGS
     {
       #region Fields
 
-      public UInt32 cchIconFile;
-      public UInt32 cchInfoTip;
-      public UInt32 cchLogo;
-      public UInt32 cchWebViewTemplate;
-      public UInt32 dwFlags;
-      public UInt32 dwMask;
-      public UInt32 dwSize;
-      public int iIconIndex;
-      public IntPtr pclsid;
-      public string pszIconFile;
-      public string pszInfoTip;
-      public string pszLogo;
-      public string pszWebViewTemplate;
-      public string pszWebViewTemplateVersion;
+      public uint dwSize;
+      public FOLDERCUSTOMSETTINGSMASK dwMask;
       public IntPtr pvid;
+
+      [MarshalAs(UnmanagedType.LPWStr)]
+      public string pszWebViewTemplate;
+      public uint cchWebViewTemplate;
+
+      [MarshalAs(UnmanagedType.LPWStr)]
+      public string pszWebViewTemplateVersion;
+
+      [MarshalAs(UnmanagedType.LPWStr)]
+      public string pszInfoTip;
+      public uint cchInfoTip;
+
+      public IntPtr pclsid;
+      public uint dwFlags;
+
+      [MarshalAs(UnmanagedType.LPWStr)]
+      public string pszIconFile;
+      public uint cchIconFile;
+      public uint iIconIndex;
+
+      [MarshalAs(UnmanagedType.LPWStr)]
+      public string pszLogo;
+      public uint cchLogo;
 
       #endregion
     }

@@ -62,14 +62,14 @@ namespace TrayPluginProductivityKit.InstanceMarking
     protected virtual bool ChangeFolderIconNative(string folderPath, string iconPath)
     {
       SHFOLDERCUSTOMSETTINGS folderSettings = new SHFOLDERCUSTOMSETTINGS();
-      folderSettings.dwMask = FOLDERCUSTOMSETTINGSMASK.FCSM_ICONFILE;
+      folderSettings.BBdwMask = FOLDERCUSTOMSETTINGSMASK.FCSM_ICONFILE;
 
-      folderSettings.dwSize = (uint)Marshal.SizeOf(typeof(SHFOLDERCUSTOMSETTINGS));
+      folderSettings.AAdwSize = (uint)Marshal.SizeOf(typeof(SHFOLDERCUSTOMSETTINGS));
       if (!string.IsNullOrEmpty(iconPath))
       {
-        folderSettings.pszIconFile = iconPath;
-        folderSettings.iIconIndex = 0;
-        folderSettings.cchIconFile = 0;
+        folderSettings.KKpszIconFile = iconPath;
+        folderSettings.MMiIconIndex = 0;
+        folderSettings.LLcchIconFile = 0;
       }
       UInt32 FCS_READ = 0x00000001;
       UInt32 FCS_FORCEWRITE = 0x00000002;
@@ -170,32 +170,36 @@ namespace TrayPluginProductivityKit.InstanceMarking
     {
       #region Fields
 
-      public uint dwSize;
-      public FOLDERCUSTOMSETTINGSMASK dwMask;
-      public IntPtr pvid;
+      public uint AAdwSize;
+      public FOLDERCUSTOMSETTINGSMASK BBdwMask;
+      public IntPtr CCpvid;
 
       [MarshalAs(UnmanagedType.LPWStr)]
-      public string pszWebViewTemplate;
-      public uint cchWebViewTemplate;
+      public string DDpszWebViewTemplate;
+
+      public uint EEcchWebViewTemplate;
 
       [MarshalAs(UnmanagedType.LPWStr)]
-      public string pszWebViewTemplateVersion;
+      public string FFpszWebViewTemplateVersion;
 
       [MarshalAs(UnmanagedType.LPWStr)]
-      public string pszInfoTip;
-      public uint cchInfoTip;
+      public string GGpszInfoTip;
 
-      public IntPtr pclsid;
-      public uint dwFlags;
+      public uint HHcchInfoTip;
+      public IntPtr IIipclsid;
 
-      [MarshalAs(UnmanagedType.LPWStr)]
-      public string pszIconFile;
-      public uint cchIconFile;
-      public uint iIconIndex;
+      public uint JJdwFlags;
 
       [MarshalAs(UnmanagedType.LPWStr)]
-      public string pszLogo;
-      public uint cchLogo;
+      public string KKpszIconFile;
+
+      public uint LLcchIconFile;
+      public uint MMiIconIndex;
+
+      [MarshalAs(UnmanagedType.LPWStr)]
+      public string NNpszLogo;
+
+      public uint OOcchLogo;
 
       #endregion
     }

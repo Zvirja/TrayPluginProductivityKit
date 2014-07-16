@@ -121,7 +121,10 @@ namespace TrayPluginProductivityKit.InstanceMarking
       {
         return;
       }
-      this.MakeMenuItemMarked(menuItem);
+      if (menuItem != null)
+      {
+        this.MakeMenuItemMarked(menuItem);
+      }
       this.MarkedInstances.Add(relatedInstance.Name, new MarkedInstance(relatedInstance, menuItem));
     }
 

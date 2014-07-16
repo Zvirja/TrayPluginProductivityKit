@@ -32,6 +32,10 @@ namespace TrayPluginProductivityKit.Helpers
       {
         return AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName.Equals(args.Name, StringComparison.OrdinalIgnoreCase));
       }
+      if (args.Name.Equals("TrayPluginProductivityKit"))
+      {
+        return Assembly.GetExecutingAssembly();
+      }
       return null;
     }
 

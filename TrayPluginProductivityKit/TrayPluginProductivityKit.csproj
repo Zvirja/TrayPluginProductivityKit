@@ -128,6 +128,7 @@
     <Compile Include="InstanceMarking\MarkedInstance.cs" />
     <Compile Include="InstanceMarking\MarkingManager.cs" />
     <Compile Include="InstanceMarking\MarkingProvider.cs" />
+    <Compile Include="InstanceMarking\PostInstallAction.cs" />
     <Compile Include="InstancePIDs\CollectorState.cs" />
     <Compile Include="InstancePIDs\InstanceMenuCollector.cs" />
     <Compile Include="InstancePIDs\ProcessIDsCustodian.cs" />

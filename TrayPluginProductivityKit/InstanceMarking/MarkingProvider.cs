@@ -63,7 +63,7 @@ namespace TrayPluginProductivityKit.InstanceMarking
         }
         else
         {
-          //We don't have that information initially. So perform a check.
+          //We don't have that information initially or if call comes not from toolstrip. So perform a check.
           MarkedInstance instanceInfo = markedInstance.Value;
           if (instanceInfo.LastKnownToolstrip != null)
           {

@@ -15,6 +15,11 @@ namespace TrayPluginProductivityKit.InstanceMarking
       MarkingManager.MarkInstance(null, args.Instance);
     }
 
+    public static void MarkInstanceExclusive(InstallWizardArgs args)
+    {
+      MarkingManager.MarkSingleInstanceOnly(null, args.Instance);
+    }
+
     #endregion
   }
 }

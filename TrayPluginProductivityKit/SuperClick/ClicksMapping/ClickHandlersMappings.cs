@@ -188,16 +188,26 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
         {
           Key.LeftShift
         },
-        CustomParameters = @"f|toolbox"
+        CustomParameters = @"b|sitecore/admin/showconfig.aspx"
       });
 
-      this.AddMapping(InstanceClickKey, new OpenCurrentLog()
+      /*this.AddMapping(InstanceClickKey, new OpenCurrentLog()
       {
         MouseButtonTrigger = MouseButtons.Middle,
         KeyTriggers = new List<Key>()
         {
           Key.LeftShift
         },
+      });*/
+
+      this.AddMapping(InstanceClickKey, new RunPage()
+      {
+        MouseButtonTrigger = MouseButtons.Middle,
+        KeyTriggers = new List<Key>()
+        {
+          Key.LeftShift
+        },
+        CustomParameters = @"f|toolbox"
       });
 
       this.AddMapping(InstanceClickKey, new RunPage()

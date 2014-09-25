@@ -179,6 +179,15 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
         CustomParameters = @"Website\bin"
       });
 
+      this.AddMapping(InstanceClickKey, new CreateVSWorkaroundPostAction()
+      {
+        MouseButtonTrigger = MouseButtons.XButton2,
+        KeyTriggers = new List<Key>()
+        {
+          Key.LeftCtrl
+        }
+      });
+
 
       //LEFT SHIFT
       this.AddMapping(InstanceClickKey, new RunPage()

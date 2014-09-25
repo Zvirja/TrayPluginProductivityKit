@@ -11,6 +11,7 @@ using TrayPluginProductivityKit.Helpers;
 using TrayPluginProductivityKit.InstanceIcons;
 using TrayPluginProductivityKit.InstanceMarking;
 using TrayPluginProductivityKit.Resources;
+using TrayPluginProductivityKit.TrayNotifications;
 
 namespace TrayPluginProductivityKit
 {
@@ -26,13 +27,16 @@ namespace TrayPluginProductivityKit
       }
       TrayPluginAssemblyResolver.Initialize(); //We still need this resolver, because TrayPlugin assembly reference will not be resolved
       //InstanceMenuCollector.Initialize();
+      ResourcesInjector.InjectResources();
       MetadataManager.Initialize();
       MappingsManager.Initialize();
-      ResourcesInjector.InjectResources();
       MarkingManager.Initialize();
       IconsPatcher.Initialize();
       BehaviorExtender.Initialize();
       //ProcessIDsCustodian.Actual.Initialize();
+      
+      TrayNotificationManager.Initialize();
+      UISyncContextHolder.CatchSyncContext();
     }
 
     public void Process(Window mainWindow)

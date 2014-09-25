@@ -65,10 +65,7 @@ namespace TrayPluginProductivityKit.InstanceMarking
         {
           //We don't have that information initially or if call comes not from toolstrip. So perform a check.
           MarkedInstance instanceInfo = markedInstance.Value;
-          if (instanceInfo.LastKnownToolstrip != null)
-          {
-            this.UnMarkInstanceInternal(instanceInfo.LastKnownToolstrip, instanceInfo.Instance);
-          }
+          this.UnMarkInstanceInternal(instanceInfo.LastKnownToolstrip, instanceInfo.Instance);
         }
       }
 
@@ -161,9 +158,16 @@ namespace TrayPluginProductivityKit.InstanceMarking
         IEnumerable<Instance> instances = InstanceManager.PartiallyCachedInstances;
         foreach (Instance instance in instances)
         {
-          if (this.FileSystemProvider.IsInstanceMarked(instance))
+          try
           {
-            markedInstances.Add(instance.Name, new MarkedInstance(instance, null));
+            if (this.FileSystemProvider.IsInstanceMarked(instance))
+            {
+              markedInstances.Add(instance.Name, new MarkedInstance(instance, null));
+            }
+          }
+          catch (Exception)
+          {
+            //silent catch
           }
         }
       }
@@ -182,7 +186,10 @@ namespace TrayPluginProductivityKit.InstanceMarking
     protected virtual void UnMarkInstanceInternal(ToolStripItem menuItem, Instance relatedInstance)
     {
       this.FileSystemProvider.UnMarkInstance(relatedInstance);
-      this.MakeMenuItemUnmarked(menuItem);
+      if(menuItem != null)
+      {
+        this.MakeMenuItemUnmarked(menuItem);
+      }
       this.MarkedInstances.Remove(relatedInstance.Name);
     }
 

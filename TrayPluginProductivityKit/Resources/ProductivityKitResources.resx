@@ -154,4 +154,19 @@
   <data name="scxx" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>x.x.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="VsPostBuildTemplateFormat" xml:space="preserve">
+    <value>rd /s/q "$(TargetDir)ToExport"
+md "$(TargetDir)ToExport"
+copy "$(TargetDir)$(TargetName).dll" "$(TargetDir)ToExport\"
+copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)ToExport\"
+copy "$(TargetDir)Sitecore.Support.*" "{0}\Website\bin"
+xcopy "$(ProjectDir)*.config" "{0}\Website\App_Config\Include" /y
+xcopy "$(ProjectDir)*.config" "$(TargetDir)ToExport" /c /y</value>
+  </data>
+  <data name="doneAction" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>doneAction.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="failedAction" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>failedAction.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

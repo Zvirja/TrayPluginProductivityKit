@@ -16,15 +16,15 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandl
 
     protected virtual string GetPathToOpen(string instanceRootPath)
     {
-      if (CustomParameters != null && CustomParameters.Trim().IndexOf(':') > -1)
+      if (this.CustomParameters != null && this.CustomParameters.Trim().IndexOf(':') > -1)
       {
         return instanceRootPath;
       }
-      if (CustomParameters.IsNullOrEmpty())
+      if (this.CustomParameters.IsNullOrEmpty())
       {
         return instanceRootPath;
       }
-      return Path.Combine(instanceRootPath, CustomParameters);
+      return Path.Combine(instanceRootPath, this.CustomParameters);
     }
 
     protected virtual bool OpenFileOrFolder(string path)

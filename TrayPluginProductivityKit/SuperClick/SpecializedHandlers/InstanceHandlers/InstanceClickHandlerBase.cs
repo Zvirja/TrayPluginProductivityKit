@@ -12,7 +12,7 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandl
 
     protected InstanceClickHandlerBase()
     {
-      ForInstanceClick = true;
+      this.ForInstanceClick = true;
     }
 
     #endregion

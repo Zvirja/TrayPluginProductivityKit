@@ -7,4 +7,12 @@
       <processor type="TrayPluginProductivityKit.EntryPoint, TrayPluginProductivityKit" />
     </loaded>
   </mainWindow>
+  <wizards>
+    <install>
+      <finish>
+        <action text="[Mark instance]" type="TrayPluginProductivityKit.InstanceMarking.PostInstallAction, TrayPluginProductivityKit" method="MarkInstance" />
+        <action text="[Mark instance exclusive]" type="TrayPluginProductivityKit.InstanceMarking.PostInstallAction, TrayPluginProductivityKit" method="MarkInstanceExclusive" />
+      </finish>
+    </install>
+  </wizards>
 </plugin>

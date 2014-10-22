@@ -34,9 +34,9 @@ namespace TrayPluginProductivityKit.InstanceMarking
       return File.Exists(GetDesktopIniPath(instance));
     }
 
-    public virtual bool MarkInstance(Instance instance)
+    public virtual bool MarkInstance(InstanceData instanceData)
     {
-      var rootPath = instance.RootPath;
+      var rootPath = instanceData.InstaceRootPath;
       if (!this.CopyFavIcon(rootPath))
       {
         return false;
@@ -45,9 +45,9 @@ namespace TrayPluginProductivityKit.InstanceMarking
       return this.ChangeFolderIconNative(rootPath, iconPath);
     }
 
-    public virtual void UnMarkInstance(Instance instance)
+    public virtual void UnMarkInstance(InstanceData instanceData)
     {
-      string rootPath = instance.RootPath;
+      string rootPath = instanceData.InstaceRootPath;
       File.Delete(GetDesktopIniPath(rootPath));
       this.ChangeFolderIconNative(rootPath, null);
     }

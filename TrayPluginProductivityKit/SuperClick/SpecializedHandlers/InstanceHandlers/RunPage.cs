@@ -31,17 +31,17 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandl
 
     protected virtual Tuple<bool, string> GetRunPageParams()
     {
-      if (CustomParameters.IsNullOrEmpty())
+      if (this.CustomParameters.IsNullOrEmpty())
       {
         return this.DefaultParams;
       }
       while (true)
       {
-        if (this.CachedForStr == CustomParameters)
+        if (this.CachedForStr == this.CustomParameters)
         {
           break;
         }
-        this.CachedForStr = CustomParameters;
+        this.CachedForStr = this.CustomParameters;
         this.CachedParams = this.DefaultParams;
         if (this.CachedForStr == null)
         {

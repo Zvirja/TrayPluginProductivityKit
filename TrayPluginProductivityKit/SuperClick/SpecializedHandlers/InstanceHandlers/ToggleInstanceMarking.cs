@@ -24,7 +24,7 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandl
         return false;
       }
       var instance = clickDetails.Instance;
-      MarkingManager.ToggleInstanceMarking(toolStripItem, instance);
+      MarkingManager.ToggleInstanceMarking(toolStripItem, InstanceData.FromInstance(instance));
       return true;
     }
 

@@ -6,13 +6,21 @@ using System.Threading;
 
 namespace TrayPluginProductivityKit.Helpers
 {
-  static class UISyncContextHolder
+  public static class UISyncContextHolder
   {
+    #region Static Fields
+
+    public static SynchronizationContext UISyncContext;
+
+    #endregion
+
+    #region Public Methods and Operators
+
     public static void CatchSyncContext()
     {
       UISyncContext = SynchronizationContext.Current;
     }
 
-    public static SynchronizationContext UISyncContext;
+    #endregion
   }
 }

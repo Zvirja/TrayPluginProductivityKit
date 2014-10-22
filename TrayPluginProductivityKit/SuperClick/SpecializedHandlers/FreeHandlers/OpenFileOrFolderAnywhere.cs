@@ -19,11 +19,11 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.FreeHandlers
 
     protected override bool ProcessClickInternal(ClickDetailsWrapper clickDetails)
     {
-      if (CustomParameters.IsNullOrEmpty())
+      if (this.CustomParameters.IsNullOrEmpty())
       {
         return false;
       }
-      return this.OpenFileOrFolder(CustomParameters);
+      return this.OpenFileOrFolder(this.CustomParameters);
     }
 
     #endregion

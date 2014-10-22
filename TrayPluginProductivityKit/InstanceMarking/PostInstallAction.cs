@@ -12,12 +12,12 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     public static void MarkInstance(InstallWizardArgs args)
     {
-      MarkingManager.MarkInstance(null, args.Instance);
+      MarkingManager.MarkInstance(null, new InstanceData(args.InstanceName, args.InstanceRootPath));
     }
 
     public static void MarkInstanceExclusive(InstallWizardArgs args)
     {
-      MarkingManager.MarkSingleInstanceOnly(null, args.Instance);
+      MarkingManager.MarkSingleInstanceOnly(null, new InstanceData(args.InstanceName, args.InstanceRootPath));
     }
 
     #endregion

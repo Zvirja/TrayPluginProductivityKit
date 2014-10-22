@@ -25,7 +25,7 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandl
         return false;
       }
       var instance = clickDetails.Instance;
-      MarkingManager.MarkSingleInstanceOnly(toolStripItem, instance);
+      MarkingManager.MarkSingleInstanceOnly(toolStripItem, InstanceData.FromInstance(instance));
       return true;
     }
 

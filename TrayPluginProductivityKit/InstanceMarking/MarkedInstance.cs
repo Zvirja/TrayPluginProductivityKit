@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using SIM.Instances;
 
 namespace TrayPluginProductivityKit.InstanceMarking
 {
@@ -11,9 +10,9 @@ namespace TrayPluginProductivityKit.InstanceMarking
   {
     #region Constructors and Destructors
 
-    public MarkedInstance(Instance instance, ToolStripItem lastKnownToolstrip)
+    public MarkedInstance(InstanceData instanceData, ToolStripItem lastKnownToolstrip)
     {
-      this.Instance = instance;
+      this.InstanceData = instanceData;
       this.LastKnownToolstrip = lastKnownToolstrip;
     }
 
@@ -21,7 +20,7 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     #region Public Properties
 
-    public Instance Instance { get; set; }
+    public InstanceData InstanceData { get; set; }
     public ToolStripItem LastKnownToolstrip { get; set; }
 
     #endregion

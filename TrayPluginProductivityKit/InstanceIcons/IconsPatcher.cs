@@ -64,27 +64,26 @@ namespace TrayPluginProductivityKit.InstanceIcons
     {
       string version = instance.Product.ShortVersion;
       string instanceName = instance.Name;
-      Image resolvedImage = this.DefaultIcon != null ? this.DefaultIcon.ToBitmap() : null;
-      while (true)
+
+      if (this.InternalCache.ContainsKey(instanceName))
       {
-        if (this.InternalCache.ContainsKey(instanceName))
+        return this.InternalCache[instanceName];
+      }
+
+      Image resolvedImage = null;
+      if (!version.IsNullOrEmpty() && version.Length > 1)
+      {
+        var shortVersion = version.Substring(0, 2);
+        var resolvedIcon = MultisourceResourcesManager.GetIconResource("sc" + shortVersion, null);
+        if (resolvedIcon != null)
         {
-          return this.InternalCache[instanceName];
+          resolvedImage = resolvedIcon.ToBitmap();
         }
-        if (version.IsNullOrEmpty())
-        {
-          break;
-        }
-        if (version.Length > 1)
-        {
-          var shortVersion = version.Substring(0, 2);
-          var resolvedIcon = MultisourceResourcesManager.GetIconResource("sc" + shortVersion, null);
-          if (resolvedIcon != null)
-          {
-            resolvedImage = resolvedIcon.ToBitmap();
-          }
-        }
-        break;
+      }
+
+      if (resolvedImage == null && this.DefaultIcon != null)
+      {
+        resolvedImage = this.DefaultIcon.ToBitmap();
       }
 
       this.InternalCache.Add(instanceName, resolvedImage);

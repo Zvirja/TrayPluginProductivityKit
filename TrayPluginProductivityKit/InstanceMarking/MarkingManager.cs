@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using SIM.Instances;
 
 namespace TrayPluginProductivityKit.InstanceMarking
 {
@@ -23,24 +22,24 @@ namespace TrayPluginProductivityKit.InstanceMarking
       ActualProvider.Initialize();
     }
 
-    public static void MarkInstance(ToolStripItem menuItem, Instance instance)
+    public static void MarkInstance(ToolStripItem menuItem, InstanceData instanceData)
     {
-      ActualProvider.MarkEntry(menuItem, instance);
+      ActualProvider.MarkEntry(menuItem, instanceData);
     }
 
-    public static void MarkSingleInstanceOnly(ToolStripItem menuItem, Instance instance)
+    public static void MarkSingleInstanceOnly(ToolStripItem menuItem, InstanceData instanceData)
     {
-      ActualProvider.MarkSingleInstanceOnly(menuItem, instance);
+      ActualProvider.MarkSingleInstanceOnly(menuItem, instanceData);
     }
 
-    public static void ToggleInstanceMarking(ToolStripItem menuItem, Instance instance)
+    public static void ToggleInstanceMarking(ToolStripItem menuItem, InstanceData instanceData)
     {
-      ActualProvider.ToggleMarking(menuItem, instance);
+      ActualProvider.ToggleMarking(menuItem, instanceData);
     }
 
-    public static void UnMarkInstance(ToolStripItem menuItem, Instance instance)
+    public static void UnMarkInstance(ToolStripItem menuItem, InstanceData instanceData)
     {
-      ActualProvider.UnMarkEntry(menuItem, instance);
+      ActualProvider.UnMarkEntry(menuItem, instanceData);
     }
 
     #endregion

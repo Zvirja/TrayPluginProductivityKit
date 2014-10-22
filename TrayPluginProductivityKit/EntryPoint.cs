@@ -34,7 +34,7 @@ namespace TrayPluginProductivityKit
       IconsPatcher.Initialize();
       BehaviorExtender.Initialize();
       //ProcessIDsCustodian.Actual.Initialize();
-      
+
       TrayNotificationManager.Initialize();
       UISyncContextHolder.CatchSyncContext();
     }

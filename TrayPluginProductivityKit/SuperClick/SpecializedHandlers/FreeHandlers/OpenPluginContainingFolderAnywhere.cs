@@ -13,7 +13,7 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.FreeHandlers
 
     public OpenPluginContainingFolderAnywhere()
     {
-      CustomParameters = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName;
+      this.CustomParameters = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName;
     }
 
     #endregion

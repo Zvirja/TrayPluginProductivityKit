@@ -34,21 +34,21 @@ namespace TrayPluginProductivityKit.InstanceMarking
       this.SubscribeToMenuRelatedEvents();
     }
 
-    public virtual void MarkEntry(ToolStripItem menuItem, Instance relatedInstance)
+    public virtual void MarkEntry(ToolStripItem menuItem, InstanceData instanceData)
     {
       this.ConstructingWaiter.Wait();
-      if (this.MarkedInstances.ContainsKey(relatedInstance.Name))
+      if (this.MarkedInstances.ContainsKey(instanceData.InstanceName))
       {
         return;
       }
-      this.MarkInstanceInternal(menuItem, relatedInstance);
+      this.MarkInstanceInternal(menuItem, instanceData);
     }
 
-    public void MarkSingleInstanceOnly(ToolStripItem menuItem, Instance instance)
+    public void MarkSingleInstanceOnly(ToolStripItem menuItem, InstanceData instanceData)
     {
       this.ConstructingWaiter.Wait();
 
-      string instanceName = instance.Name;
+      string instanceName = instanceData.InstanceName;
 
       bool needMark = true;
 
@@ -65,37 +65,37 @@ namespace TrayPluginProductivityKit.InstanceMarking
         {
           //We don't have that information initially or if call comes not from toolstrip. So perform a check.
           MarkedInstance instanceInfo = markedInstance.Value;
-          this.UnMarkInstanceInternal(instanceInfo.LastKnownToolstrip, instanceInfo.Instance);
+          this.UnMarkInstanceInternal(instanceInfo.LastKnownToolstrip, instanceInfo.InstanceData);
         }
       }
 
       if (needMark)
       {
-        this.MarkInstanceInternal(menuItem, instance);
+        this.MarkInstanceInternal(menuItem, instanceData);
       }
     }
 
-    public virtual void ToggleMarking(ToolStripItem menuItem, Instance relatedInstance)
+    public virtual void ToggleMarking(ToolStripItem menuItem, InstanceData instanceData)
     {
       this.ConstructingWaiter.Wait();
-      if (this.MarkedInstances.ContainsKey(relatedInstance.Name))
+      if (this.MarkedInstances.ContainsKey(instanceData.InstanceName))
       {
-        this.UnMarkInstanceInternal(menuItem, relatedInstance);
+        this.UnMarkInstanceInternal(menuItem, instanceData);
       }
       else
       {
-        this.MarkInstanceInternal(menuItem, relatedInstance);
+        this.MarkInstanceInternal(menuItem, instanceData);
       }
     }
 
-    public virtual void UnMarkEntry(ToolStripItem menuItem, Instance relatedInstance)
+    public virtual void UnMarkEntry(ToolStripItem menuItem, InstanceData instanceData)
     {
       this.ConstructingWaiter.Wait();
-      if (!this.MarkedInstances.ContainsKey(relatedInstance.Name))
+      if (!this.MarkedInstances.ContainsKey(instanceData.InstanceName))
       {
         return;
       }
-      this.UnMarkInstanceInternal(menuItem, relatedInstance);
+      this.UnMarkInstanceInternal(menuItem, instanceData);
     }
 
     #endregion
@@ -112,9 +112,9 @@ namespace TrayPluginProductivityKit.InstanceMarking
       menuItem.Font = new Font(menuItem.Font, FontStyle.Regular);
     }
 
-    protected virtual void MarkInstanceInternal(ToolStripItem menuItem, Instance relatedInstance)
+    protected virtual void MarkInstanceInternal(ToolStripItem menuItem, InstanceData instanceData)
     {
-      if (!this.FileSystemProvider.MarkInstance(relatedInstance))
+      if (!this.FileSystemProvider.MarkInstance(instanceData))
       {
         return;
       }
@@ -122,7 +122,7 @@ namespace TrayPluginProductivityKit.InstanceMarking
       {
         this.MakeMenuItemMarked(menuItem);
       }
-      this.MarkedInstances.Add(relatedInstance.Name, new MarkedInstance(relatedInstance, menuItem));
+      this.MarkedInstances.Add(instanceData.InstanceName, new MarkedInstance(instanceData, menuItem));
     }
 
     protected virtual void OnInstanceManagerUpdated(object sender, EventArgs e)
@@ -162,7 +162,7 @@ namespace TrayPluginProductivityKit.InstanceMarking
           {
             if (this.FileSystemProvider.IsInstanceMarked(instance))
             {
-              markedInstances.Add(instance.Name, new MarkedInstance(instance, null));
+              markedInstances.Add(instance.Name, new MarkedInstance(InstanceData.FromInstance(instance), null));
             }
           }
           catch (Exception)
@@ -183,14 +183,14 @@ namespace TrayPluginProductivityKit.InstanceMarking
       TrayPluginEvents.ContextMenuEntryConstructed += this.OnMenuEntryConstructed;
     }
 
-    protected virtual void UnMarkInstanceInternal(ToolStripItem menuItem, Instance relatedInstance)
+    protected virtual void UnMarkInstanceInternal(ToolStripItem menuItem, InstanceData instanceData)
     {
-      this.FileSystemProvider.UnMarkInstance(relatedInstance);
-      if(menuItem != null)
+      this.FileSystemProvider.UnMarkInstance(instanceData);
+      if (menuItem != null)
       {
         this.MakeMenuItemUnmarked(menuItem);
       }
-      this.MarkedInstances.Remove(relatedInstance.Name);
+      this.MarkedInstances.Remove(instanceData.InstanceName);
     }
 
     #endregion

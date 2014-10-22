@@ -11,6 +11,8 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandl
 {
   public class CreateVSWorkaroundPostAction : InstanceClickHandlerBase
   {
+    #region Methods
+
     protected override bool ProcessInstanceClickInternal(Instance instance)
     {
       string rootPath = instance.RootPath.TrimEnd('\\', '/');
@@ -27,5 +29,7 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandl
 
       return true;
     }
+
+    #endregion
   }
 }

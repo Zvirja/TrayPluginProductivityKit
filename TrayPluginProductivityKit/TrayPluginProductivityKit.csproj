@@ -126,6 +126,7 @@
     <Compile Include="Helpers\UISyncContextHolder.cs" />
     <Compile Include="InstanceIcons\IconsPatcher.cs" />
     <Compile Include="InstanceMarking\FilesystemMarkingProvider.cs" />
+    <Compile Include="InstanceMarking\InstanceData.cs" />
     <Compile Include="InstanceMarking\MarkedInstance.cs" />
     <Compile Include="InstanceMarking\MarkingManager.cs" />
     <Compile Include="InstanceMarking\MarkingProvider.cs" />
@@ -172,6 +173,9 @@
     <Content Include="Plugin.xml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Resources\8.1.ico" />
+    <None Include="Resources\8.0.ico" />
+    <None Include="Resources\7.5.ico" />
     <None Include="Resources\failedAction.ico" />
     <None Include="Resources\doneAction.ico" />
     <None Include="App.config">

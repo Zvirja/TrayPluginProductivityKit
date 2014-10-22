@@ -169,4 +169,13 @@ xcopy "$(ProjectDir)*.config" "$(TargetDir)ToExport" /c /y</value>
   <data name="failedAction" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>failedAction.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="sc75" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>7.5.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sc80" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>8.0.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sc81" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>8.1.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -9,7 +9,6 @@ using SIM.Tool.Plugins.TrayPlugin;
 using SIM.Tool.Plugins.TrayPlugin.Resourcing;
 using SIM.Tool.Plugins.TrayPlugin.TrayIcon;
 using TrayPluginProductivityKit.Helpers;
-using TrayPluginProductivityKit.Resources;
 
 namespace TrayPluginProductivityKit.TrayNotifications
 {
@@ -98,7 +97,7 @@ namespace TrayPluginProductivityKit.TrayNotifications
       TrayPluginEvents.TrayIconProviderInitialized += this.TrayPluginEventsOnTrayIconProviderInitialized;
 
       this.m_successIcon = MultisourceResourcesManager.GetIconResource("doneAction", null);
-      this.m_failedIcon = MultisourceResourcesManager.GetIconResource("failedAction", null); 
+      this.m_failedIcon = MultisourceResourcesManager.GetIconResource("failedAction", null);
     }
 
     private void TrayPluginEventsOnTrayIconProviderInitialized(object sender, EventArgs eventArgs)

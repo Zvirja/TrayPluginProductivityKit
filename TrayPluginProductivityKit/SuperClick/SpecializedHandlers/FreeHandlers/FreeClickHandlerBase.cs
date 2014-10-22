@@ -11,7 +11,7 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.FreeHandlers
 
     protected FreeClickHandlerBase()
     {
-      ForInstanceClick = false;
+      this.ForInstanceClick = false;
     }
 
     #endregion

@@ -15,6 +15,12 @@ namespace TrayPluginProductivityKit.InstanceMarking
 {
   public class MarkingProvider
   {
+    #region Fields
+
+    private int m_wasInitialized = 0;
+
+    #endregion
+
     #region Properties
 
     protected ManualResetEventSlim ConstructingWaiter { get; set; }
@@ -102,6 +108,26 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     #region Methods
 
+    protected virtual void CleanupNonExistingEntries()
+    {
+      //Not initialized yet.
+      if (this.MarkedInstances == null)
+      {
+        return;
+      }
+
+      var currentInstances = new HashSet<string>(InstanceManager.Instances.Select(inst => inst.Name));
+      var keysToRemove = this.MarkedInstances.Where(markedInst => !currentInstances.Contains(markedInst.Key)).ToList();
+
+      if (keysToRemove.Count > 0)
+      {
+        foreach (KeyValuePair<string, MarkedInstance> isntToRemove in keysToRemove)
+        {
+          this.MarkedInstances.Remove(isntToRemove.Key);
+        }
+      }
+    }
+
     protected virtual void MakeMenuItemMarked(ToolStripItem menuItem)
     {
       menuItem.Font = new Font(menuItem.Font, FontStyle.Bold);
@@ -127,9 +153,13 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     protected virtual void OnInstanceManagerUpdated(object sender, EventArgs e)
     {
-      //One time subscription
-      InstanceManager.InstancesListUpdated -= this.OnInstanceManagerUpdated;
-      Task.Factory.StartNew(this.PerformInitialInitialization);
+      //Init for one time only
+      if (Interlocked.CompareExchange(ref this.m_wasInitialized, 1, 0) == 0)
+      {
+        Task.Factory.StartNew(this.PerformInitialInitialization);
+      }
+
+      this.CleanupNonExistingEntries();
     }
 
     protected virtual void OnMenuEntryConstructed(object sender, MenuEntryConstructedArgs args)

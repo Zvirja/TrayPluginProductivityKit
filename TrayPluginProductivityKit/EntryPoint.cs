@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using SIM.Tool.Base.Plugins;
+using SIM.Tool.Windows;
 using TrayPluginProductivityKit.BehaviorExtending;
 using TrayPluginProductivityKit.Configuration.Mappings;
 using TrayPluginProductivityKit.Configuration.Mappings.Metadata;
@@ -11,6 +12,7 @@ using TrayPluginProductivityKit.Helpers;
 using TrayPluginProductivityKit.InstanceIcons;
 using TrayPluginProductivityKit.InstanceMarking;
 using TrayPluginProductivityKit.Resources;
+using TrayPluginProductivityKit.SilentStartup;
 using TrayPluginProductivityKit.TrayNotifications;
 
 namespace TrayPluginProductivityKit
@@ -37,6 +39,8 @@ namespace TrayPluginProductivityKit
 
       TrayNotificationManager.Initialize();
       UISyncContextHolder.CatchSyncContext();
+
+      MinimizedStartupManager.Init(MainWindow.Instance);
     }
 
     public void Process(Window mainWindow)

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows;
 using SIM.Tool.Windows;
 
 namespace TrayPluginProductivityKit.SilentStartup
@@ -64,16 +63,14 @@ namespace TrayPluginProductivityKit.SilentStartup
         return;
       }
 
-      this.WindowReference.IsVisibleChanged += this.WindowReference_IsVisibleChanged;
+      this.WindowReference.Activated += this.WindowReferenceOnActivated;
     }
 
-    private void WindowReference_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+    private void WindowReferenceOnActivated(object sender, EventArgs eventArgs)
     {
-      if (this._shouldHideDuringStartup)
-      {
-        this.WindowReference.Hide();
-        this._shouldHideDuringStartup = false;
-      }
+      //One time subscription
+      this.WindowReference.Activated -= this.WindowReferenceOnActivated;
+      this.WindowReference.Hide();
     }
 
     #endregion

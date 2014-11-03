@@ -41,7 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Fluent">
-      <HintPath>..\..\SIM_TrayPlugin\Code\WPF Client\Tool\bin\Fluent.dll</HintPath>
+      <HintPath>D:\SIM.FORBUILD\Fluent.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />

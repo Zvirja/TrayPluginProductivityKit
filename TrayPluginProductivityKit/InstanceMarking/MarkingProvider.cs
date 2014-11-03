@@ -116,7 +116,7 @@ namespace TrayPluginProductivityKit.InstanceMarking
         return;
       }
 
-      var currentInstances = new HashSet<string>(InstanceManager.Instances.Select(inst => inst.Name));
+      var currentInstances = new HashSet<string>(InstanceManager.PartiallyCachedInstances.Select(inst => inst.Name));
       var keysToRemove = this.MarkedInstances.Where(markedInst => !currentInstances.Contains(markedInst.Key)).ToList();
 
       if (keysToRemove.Count > 0)

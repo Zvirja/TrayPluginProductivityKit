@@ -6,6 +6,7 @@ using System.Windows;
 using SIM.Tool.Base.Plugins;
 using SIM.Tool.Windows;
 using TrayPluginProductivityKit.BehaviorExtending;
+using TrayPluginProductivityKit.Configuration;
 using TrayPluginProductivityKit.Configuration.Mappings;
 using TrayPluginProductivityKit.Configuration.Mappings.Metadata;
 using TrayPluginProductivityKit.Helpers;
@@ -27,6 +28,8 @@ namespace TrayPluginProductivityKit
       {
         return;
       }
+
+      TPPKAdvancedSettings.Init(); //Need this to promote custom settings to config manager
       TrayPluginAssemblyResolver.Initialize(); //We still need this resolver, because TrayPlugin assembly reference will not be resolved
       //InstanceMenuCollector.Initialize();
       ResourcesInjector.InjectResources();
@@ -41,6 +44,8 @@ namespace TrayPluginProductivityKit
       UISyncContextHolder.CatchSyncContext();
 
       MinimizedStartupManager.Init(MainWindow.Instance);
+
+      //  InstallPipelineInjector.InjectCustomPipeline();
     }
 
     public void Process(Window mainWindow)

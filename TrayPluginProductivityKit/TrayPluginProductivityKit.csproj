@@ -54,6 +54,14 @@
       <HintPath>..\..\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Kernel.Adapters.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Condition="'$(Configuration)'=='Debug'" Include="SIM.Pipelines">
+      <HintPath>..\..\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Pipelines.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Condition="'$(Configuration)'=='Debug'" Include="SIM.Kernel.Pipelines">
+      <HintPath>..\..\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Kernel.Pipelines.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Condition="'$(Configuration)'=='Debug'" Include="SIM.Kernel.Instances">
       <HintPath>..\..\SIM_TrayPlugin\Code\WPF Client\Tool\bin\SIM.Kernel.Instances.dll</HintPath>
       <Private>False</Private>
@@ -84,6 +92,14 @@
     </Reference>
     <Reference Condition="'$(Configuration)'!='Debug'" Include="SIM.Kernel.Instances">
       <HintPath>D:\SIM.FORBUILD\SIM.Kernel.Instances.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Condition="'$(Configuration)'!='Debug'" Include="SIM.Pipelines">
+      <HintPath>D:\SIM.FORBUILD\SIM.Pipelines.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Condition="'$(Configuration)'!='Debug'" Include="SIM.Kernel.Pipelines">
+      <HintPath>D:\SIM.FORBUILD\SIM.Kernel.Pipelines.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Condition="'$(Configuration)'!='Debug'" Include="SIM.Kernel.Products">
@@ -119,6 +135,7 @@
     <Compile Include="Configuration\Mappings\Metadata\ActionMetadata.cs" />
     <Compile Include="Configuration\Mappings\Metadata\MappingMetadata.cs" />
     <Compile Include="Configuration\Mappings\Metadata\MetadataManager.cs" />
+    <Compile Include="Configuration\TPPKAdvancedSettings.cs" />
     <Compile Include="EntryPoint.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -128,6 +145,10 @@
     <Compile Include="Helpers\SIMDialogsInteractionHelper.cs" />
     <Compile Include="Helpers\TrayPluginAssemblyResolver.cs" />
     <Compile Include="Helpers\UISyncContextHolder.cs" />
+    <Compile Include="InstallCleanup\InstallCleanupAction.cs" />
+    <Compile Include="InstallCleanup\InstallCleanupHelper.cs" />
+    <Compile Include="InstallCleanup\InstallFilesCleanup.cs" />
+    <Compile Include="InstallCleanup\InstallPipelineInjector.cs" />
     <Compile Include="InstanceIcons\IconsPatcher.cs" />
     <Compile Include="InstanceMarking\FilesystemMarkingProvider.cs" />
     <Compile Include="InstanceMarking\InstanceData.cs" />
@@ -178,6 +199,7 @@
     <Content Include="Plugin.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="TPPK.Sitecore files cleanup.manifest.xml" />
     <None Include="Resources\8.1.ico" />
     <None Include="Resources\8.0.ico" />
     <None Include="Resources\7.5.ico" />
@@ -198,6 +220,7 @@
     <None Include="Resources\7.1.ico" />
     <None Include="Resources\7.2.ico" />
     <None Include="Resources\6.1.ico" />
+    <None Include="TPPK.Sitecore files cleanup.zip" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ProductivityKitResources.resx">
@@ -209,7 +232,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)Plugin.xml" "C:\Users\apo\AppData\Roaming\Sitecore\Sitecore Instance Manager\Plugins\TrayPluginProductivityKit"
-copy "$(TargetDir)*" "C:\Users\apo\AppData\Roaming\Sitecore\Sitecore Instance Manager\Plugins\TrayPluginProductivityKit"</PostBuildEvent>
+copy "$(TargetDir)*" "C:\Users\apo\AppData\Roaming\Sitecore\Sitecore Instance Manager\Plugins\TrayPluginProductivityKit"
+copy "$(ProjectDir)TPPK.*" "C:\Users\apo\AppData\Roaming\Sitecore\Sitecore Instance Manager\Plugins\TrayPluginProductivityKit"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

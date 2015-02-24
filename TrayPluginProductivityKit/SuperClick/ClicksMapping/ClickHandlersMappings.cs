@@ -197,7 +197,7 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
         {
           Key.LeftShift
         },
-        CustomParameters = @"b|sitecore/admin/showconfig.aspx"
+        CustomParameters = @"f|sitecore/admin/showconfig.aspx"
       });
 
       /*this.AddMapping(InstanceClickKey, new OpenCurrentLog()

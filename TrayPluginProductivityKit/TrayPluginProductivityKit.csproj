@@ -199,7 +199,9 @@
     <Content Include="Plugin.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="TPPK.Sitecore config cleanup.manifest.xml" />
+    <Content Include="TPPK.Sitecore config cleanup.manifest.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="TPPK.Sitecore files cleanup.manifest.xml" />
     <None Include="Resources\8.1.ico" />
     <None Include="Resources\8.0.ico" />

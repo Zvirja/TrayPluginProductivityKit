@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using SIM.Base;
+using TrayPluginProductivityKit.Configuration;
 
 namespace TrayPluginProductivityKit.Helpers
 {
@@ -19,10 +20,15 @@ namespace TrayPluginProductivityKit.Helpers
         MessageBoxIcon.Question) == DialogResult.Yes;
     }
 
-    public static void OpenInExplorer(string folderPath)
+    public static void RunFile(string filePath)
+    {
+      Process.Start("explorer.exe", filePath);
+    }
+
+    public static void OpenFolderInExplorer(string folderPath)
     {
       var args = folderPath;
-      Process.Start("explorer.exe", args);
+      Process.Start(TPPKAdvancedSettings.TPPKShell.Value, args);
     }
 
     public static void ShowMessage(string text, string header, MessageBoxIcon icon = MessageBoxIcon.Information)

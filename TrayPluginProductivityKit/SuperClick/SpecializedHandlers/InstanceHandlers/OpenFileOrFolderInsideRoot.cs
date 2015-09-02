@@ -29,9 +29,12 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandl
 
     protected virtual bool OpenFileOrFolder(string path)
     {
-      if (File.Exists(path) || Directory.Exists(path))
+      if (File.Exists(path))
       {
-        OSShellHelper.OpenInExplorer(path);
+        OSShellHelper.RunFile(path);
+      } else if (Directory.Exists(path))
+      {
+        OSShellHelper.OpenFolderInExplorer(path);
       }
       else
       {

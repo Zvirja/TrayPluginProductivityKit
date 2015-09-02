@@ -12,6 +12,8 @@ namespace TrayPluginProductivityKit.Configuration
 
     public static readonly AdvancedProperty<string> TPPKRemAfterInstall = AdvancedSettings.Create("App/Plugins/TrayPluginProductivityKit/Install/RemOnInstall", string.Empty);
 
+    public static readonly AdvancedProperty<string> TPPKShell = AdvancedSettings.Create("App/Plugins/TrayPluginProductivityKit/OSShell", "explorer.exe");
+
     #endregion
 
     #region Constructors and Destructors

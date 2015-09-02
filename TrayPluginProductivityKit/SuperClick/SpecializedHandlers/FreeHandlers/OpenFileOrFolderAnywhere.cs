@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using SIM.Base;
@@ -13,7 +14,14 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.FreeHandlers
 
     protected virtual bool OpenFileOrFolder(string path)
     {
-      OSShellHelper.OpenInExplorer(path);
+      if (File.Exists(path))
+      {
+        OSShellHelper.RunFile(path);
+      }
+      else
+      {
+        OSShellHelper.OpenFolderInExplorer(path);
+      }
       return true;
     }
 

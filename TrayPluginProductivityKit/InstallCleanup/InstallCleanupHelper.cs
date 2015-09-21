@@ -1,16 +1,20 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using SIM.Base;
+using SIM;
 using TrayPluginProductivityKit.Configuration;
+
+#endregion
 
 namespace TrayPluginProductivityKit.InstallCleanup
 {
   public static class InstallCleanupHelper
   {
-    #region Public Methods and Operators
+    #region Methods
 
     public static void DoInstanceCleanup(string instaceRootPath)
     {

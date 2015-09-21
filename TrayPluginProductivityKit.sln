@@ -1,19 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrayPluginProductivityKit", "TrayPluginProductivityKit\TrayPluginProductivityKit.csproj", "{23F19F78-4432-4665-8B75-48A05CCB6C96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug on local build|Any CPU = Debug on local build|Any CPU
 		Debug on public build|Any CPU = Debug on public build|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{23F19F78-4432-4665-8B75-48A05CCB6C96}.Debug on local build|Any CPU.ActiveCfg = Debug|Any CPU
-		{23F19F78-4432-4665-8B75-48A05CCB6C96}.Debug on local build|Any CPU.Build.0 = Debug|Any CPU
-		{23F19F78-4432-4665-8B75-48A05CCB6C96}.Debug on public build|Any CPU.ActiveCfg = Debug on public build|Any CPU
-		{23F19F78-4432-4665-8B75-48A05CCB6C96}.Debug on public build|Any CPU.Build.0 = Debug on public build|Any CPU
+		{23F19F78-4432-4665-8B75-48A05CCB6C96}.Debug on public build|Any CPU.ActiveCfg = Debug|Any CPU
+		{23F19F78-4432-4665-8B75-48A05CCB6C96}.Debug on public build|Any CPU.Build.0 = Debug|Any CPU
 		{23F19F78-4432-4665-8B75-48A05CCB6C96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23F19F78-4432-4665-8B75-48A05CCB6C96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

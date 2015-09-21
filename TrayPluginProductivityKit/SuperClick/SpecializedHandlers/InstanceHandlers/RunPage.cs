@@ -1,16 +1,20 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SIM.Base;
+using SIM;
 using SIM.Instances;
 using SIM.Tool.Base;
+
+#endregion
 
 namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandlers
 {
   public class RunPage : InstanceClickHandlerBase
   {
-    #region Constructors and Destructors
+    #region Constructors
 
     public RunPage()
     {

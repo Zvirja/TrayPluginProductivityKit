@@ -1,17 +1,21 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using SIM.Base;
+using SIM;
 using TrayPluginProductivityKit.Helpers;
+
+#endregion
 
 namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.FreeHandlers
 {
   public class IISProcessIDs : FreeClickHandlerBase
   {
-    #region Static Fields
+    #region Fields
 
     protected static readonly string DialogLabel = "SIM - Run instance PIDs";
 

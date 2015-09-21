@@ -3,9 +3,12 @@
     <install>
       <actions>
         <editfile path="/Website/Web.config">
-          <replace source="&lt;hook type=&quot;Sitecore.Diagnostics.HealthMonitorHook," target="&lt;!-- TPPK &lt;hook type=&quot;Sitecore.Diagnostics.HealthMonitorHook," />
+          <replace source="&lt;hook type=&quot;Sitecore.Diagnostics.HealthMonitorHook,"
+                   target="&lt;!-- TPPK &lt;hook type=&quot;Sitecore.Diagnostics.HealthMonitorHook," />
           <replace source="&lt;/hook&gt;" target="&lt;/hook&gt; --&gt;" />
-          <replace source="&lt;add type=&quot;Sitecore.Resources.Media.UploadWatcher, Sitecore.Kernel&quot; name=&quot;SitecoreUploadWatcher&quot; /&gt;" target="&lt;!-- &lt;add type=&quot;Sitecore.Resources.Media.UploadWatcher, Sitecore.Kernel&quot; name=&quot;SitecoreUploadWatcher&quot; /&gt; --&gt;" />
+          <replace
+            source="&lt;add type=&quot;Sitecore.Resources.Media.UploadWatcher, Sitecore.Kernel&quot; name=&quot;SitecoreUploadWatcher&quot; /&gt;"
+            target="&lt;!-- &lt;add type=&quot;Sitecore.Resources.Media.UploadWatcher, Sitecore.Kernel&quot; name=&quot;SitecoreUploadWatcher&quot; /&gt; --&gt;" />
         </editfile>
       </actions>
     </install>

@@ -1,14 +1,18 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TrayPluginProductivityKit.SuperClick;
 
+#endregion
+
 namespace TrayPluginProductivityKit.Configuration.Mappings.Metadata
 {
   public class ActionMetadata
   {
-    #region Constructors and Destructors
+    #region Constructors
 
     public ActionMetadata(string actionType, string alias, string parametersFormat, string description)
     {
@@ -20,7 +24,7 @@ namespace TrayPluginProductivityKit.Configuration.Mappings.Metadata
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public string ActionType { get; set; }
     public string Alias { get; set; }
@@ -38,7 +42,7 @@ namespace TrayPluginProductivityKit.Configuration.Mappings.Metadata
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public MouseClickHandlerBase GetNewlyConsntructedAction()
     {

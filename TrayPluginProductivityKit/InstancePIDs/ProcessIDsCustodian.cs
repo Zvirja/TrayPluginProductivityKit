@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -6,14 +8,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SIM.Base;
+using SIM;
 using SIM.Instances;
+
+#endregion
 
 namespace TrayPluginProductivityKit.InstancePIDs
 {
   public class ProcessIDsCustodian
   {
-    #region Constructors and Destructors
+    #region Constructors
 
     static ProcessIDsCustodian()
     {
@@ -28,20 +32,16 @@ namespace TrayPluginProductivityKit.InstancePIDs
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public static ProcessIDsCustodian Actual { get; set; }
-
-    #endregion
-
-    #region Properties
 
     protected ProcessMonitor PMonitor { get; set; }
     protected Queue<Dictionary<Instance, ToolStripItem>> TasksToProcess { get; set; }
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public virtual void Initialize()
     {
@@ -50,10 +50,6 @@ namespace TrayPluginProductivityKit.InstancePIDs
       InstanceMenuCollector.Collector.ContextMenuUpdated += this.CollectorOnContextMenuUpdated;
       this.StartUpdaterQueue();
     }
-
-    #endregion
-
-    #region Methods
 
     protected virtual void CollectorOnContextMenuUpdated(InstanceMenuCollector instanceMenuCollector)
     {

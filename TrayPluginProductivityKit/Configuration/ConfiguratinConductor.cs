@@ -1,17 +1,22 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml;
-using SIM.Base;
+using Sitecore.Diagnostics;
+using SIM;
+
+#endregion
 
 namespace TrayPluginProductivityKit.Configuration
 {
   public static class ConfiguratinConductor
   {
-    #region Public Properties
+    #region Properties
 
     public static XmlDocument ProductivityKitConfig
     {

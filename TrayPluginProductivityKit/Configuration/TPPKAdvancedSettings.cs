@@ -1,14 +1,18 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SIM.Base;
+using SIM;
+
+#endregion
 
 namespace TrayPluginProductivityKit.Configuration
 {
   public static class TPPKAdvancedSettings
   {
-    #region Static Fields
+    #region Fields
 
     public static readonly AdvancedProperty<string> TPPKRemAfterInstall = AdvancedSettings.Create("App/Plugins/TrayPluginProductivityKit/Install/RemOnInstall", string.Empty);
 
@@ -16,7 +20,7 @@ namespace TrayPluginProductivityKit.Configuration
 
     #endregion
 
-    #region Constructors and Destructors
+    #region Constructors
 
     static TPPKAdvancedSettings()
     {
@@ -24,7 +28,7 @@ namespace TrayPluginProductivityKit.Configuration
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public static void Init()
     {

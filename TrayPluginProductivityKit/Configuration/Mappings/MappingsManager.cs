@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,11 +9,13 @@ using System.Text;
 using System.Xml.Serialization;
 using TrayPluginProductivityKit.Configuration.Mappings.Metadata;
 
+#endregion
+
 namespace TrayPluginProductivityKit.Configuration.Mappings
 {
   public class MappingsManager
   {
-    #region Public Properties
+    #region Properties
 
     public static MappingsManager ActualManager { get; set; }
 
@@ -20,7 +24,7 @@ namespace TrayPluginProductivityKit.Configuration.Mappings
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public static void Initialize()
     {
@@ -41,10 +45,6 @@ namespace TrayPluginProductivityKit.Configuration.Mappings
     {
       this.SaveMappings();
     }
-
-    #endregion
-
-    #region Methods
 
     protected virtual string GetFilePath()
     {

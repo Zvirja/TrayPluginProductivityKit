@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +10,8 @@ using SIM.Instances;
 using SIM.Tool.Plugins.TrayPlugin;
 using SIM.Tool.Plugins.TrayPlugin.TrayIcon.ContextMenu;
 using SIM.Tool.Plugins.TrayPlugin.TrayIcon.ContextMenu.Eventing;
+
+#endregion
 
 namespace TrayPluginProductivityKit.InstancePIDs
 {
@@ -19,7 +23,7 @@ namespace TrayPluginProductivityKit.InstancePIDs
 
     #endregion
 
-    #region Constructors and Destructors
+    #region Constructors
 
     protected InstanceMenuCollector()
     {
@@ -27,26 +31,16 @@ namespace TrayPluginProductivityKit.InstancePIDs
 
     #endregion
 
-    #region Public Events
-
-    public event Action<InstanceMenuCollector> ContextMenuUpdated;
-
-    #endregion
-
-    #region Public Properties
+    #region Properties
 
     public static InstanceMenuCollector Collector { get; set; }
     public Dictionary<Instance, ToolStripItem> ContextMenu { get; set; }
-
-    #endregion
-
-    #region Properties
 
     protected CollectorState CurrentState { get; set; }
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public static void Initialize()
     {
@@ -62,10 +56,6 @@ namespace TrayPluginProductivityKit.InstancePIDs
       TrayPluginEvents.ContextMenuEntryConstructed += this.OnMenuEntryConstructed;
       TrayPluginEvents.ContextMenuConstructed += this.OnContextMenuConstructed;
     }
-
-    #endregion
-
-    #region Methods
 
     protected virtual void AddInstanceEntry(MenuEntryConstructedArgs args)
     {
@@ -114,5 +104,7 @@ namespace TrayPluginProductivityKit.InstancePIDs
     }
 
     #endregion
+
+    public event Action<InstanceMenuCollector> ContextMenuUpdated;
   }
 }

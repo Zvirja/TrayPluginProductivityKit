@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -7,11 +9,13 @@ using SIM.Pipelines;
 using SIM.Pipelines.Install;
 using SIM.Pipelines.Processors;
 
+#endregion
+
 namespace TrayPluginProductivityKit.InstallCleanup
 {
   public static class InstallPipelineInjector
   {
-    #region Public Methods and Operators
+    #region Methods
 
     public static void InjectCustomPipeline()
     {

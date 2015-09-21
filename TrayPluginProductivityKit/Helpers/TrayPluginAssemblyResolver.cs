@@ -1,8 +1,12 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+
+#endregion
 
 namespace TrayPluginProductivityKit.Helpers
 {
@@ -14,17 +18,13 @@ namespace TrayPluginProductivityKit.Helpers
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public static void Initialize()
     {
       CurrentAssembly = Assembly.GetExecutingAssembly();
       AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
     }
-
-    #endregion
-
-    #region Methods
 
     private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
     {

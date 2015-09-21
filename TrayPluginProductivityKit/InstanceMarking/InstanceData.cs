@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SIM.Instances;
+using TrayPluginProductivityKit.Helpers;
 
 #endregion
 
@@ -33,7 +34,7 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     public static InstanceData FromInstance(Instance instance)
     {
-      return new InstanceData(instance.Name, instance.RootPath);
+      return new InstanceData(instance.Name, TPPKInstanceHelper.GetInstanceRoot(instance));
     }
 
     #endregion

@@ -90,6 +90,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helpers\ClickHelper.cs" />
+    <Compile Include="Helpers\TPPKInstanceHelper.cs" />
     <Compile Include="Helpers\MainWindowHelperProxy.cs" />
     <Compile Include="Helpers\OSShellHelper.cs" />
     <Compile Include="Helpers\SIMDialogsInteractionHelper.cs" />

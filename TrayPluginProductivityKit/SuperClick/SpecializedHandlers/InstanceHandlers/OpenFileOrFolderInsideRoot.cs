@@ -20,11 +20,11 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandl
 
     protected virtual string GetPathToOpen(string instanceRootPath)
     {
-      if (this.CustomParameters != null && this.CustomParameters.Trim().IndexOf(':') > -1)
+      if (this.CustomParameters.IsNullOrEmpty())
       {
         return instanceRootPath;
       }
-      if (this.CustomParameters.IsNullOrEmpty())
+      if (this.CustomParameters.IndexOf(':') > -1)
       {
         return instanceRootPath;
       }
@@ -50,7 +50,7 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandl
 
     protected override bool ProcessInstanceClickInternal(Instance instance)
     {
-      var path = this.GetPathToOpen(instance.RootPath);
+      var path = this.GetPathToOpen(TPPKInstanceHelper.GetInstanceRoot(instance));
       return this.OpenFileOrFolder(path);
     }
 

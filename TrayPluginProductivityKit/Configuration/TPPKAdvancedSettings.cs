@@ -14,6 +14,8 @@ namespace TrayPluginProductivityKit.Configuration
   {
     #region Fields
 
+    public static readonly AdvancedProperty<bool> TPPKFastRootEvaluation = AdvancedSettings.Create("App/Plugins/TrayPluginProductivityKit/FastRootPathEvaluation", true);
+
     public static readonly AdvancedProperty<string> TPPKRemAfterInstall = AdvancedSettings.Create("App/Plugins/TrayPluginProductivityKit/Install/RemOnInstall", string.Empty);
 
     public static readonly AdvancedProperty<string> TPPKShell = AdvancedSettings.Create("App/Plugins/TrayPluginProductivityKit/OSShell", "explorer.exe");

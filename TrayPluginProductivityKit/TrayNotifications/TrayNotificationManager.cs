@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -10,23 +12,17 @@ using SIM.Tool.Plugins.TrayPlugin.Resourcing;
 using SIM.Tool.Plugins.TrayPlugin.TrayIcon;
 using TrayPluginProductivityKit.Helpers;
 
+#endregion
+
 namespace TrayPluginProductivityKit.TrayNotifications
 {
   public class TrayNotificationManager
   {
-    #region Constants
+    #region Fields
 
     private const int MsecDefaultTimeout = 500;
 
-    #endregion
-
-    #region Static Fields
-
     public static TrayNotificationManager ActualManager = new TrayNotificationManager();
-
-    #endregion
-
-    #region Fields
 
     private CancellationTokenSource m_cancellationSource;
 
@@ -36,7 +32,7 @@ namespace TrayPluginProductivityKit.TrayNotifications
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public static void Initialize()
     {
@@ -52,10 +48,6 @@ namespace TrayPluginProductivityKit.TrayNotifications
     {
       this.ChangeNotifyIcon(this.m_successIcon, timeout);
     }
-
-    #endregion
-
-    #region Methods
 
     private void ChangeNotifyIcon(Icon newIcon, int timeout = 0)
     {

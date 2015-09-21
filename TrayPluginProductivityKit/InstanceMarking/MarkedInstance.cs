@@ -1,14 +1,18 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+#endregion
+
 namespace TrayPluginProductivityKit.InstanceMarking
 {
   public class MarkedInstance
   {
-    #region Constructors and Destructors
+    #region Constructors
 
     public MarkedInstance(InstanceData instanceData, ToolStripItem lastKnownToolstrip)
     {
@@ -18,7 +22,7 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public InstanceData InstanceData { get; set; }
     public ToolStripItem LastKnownToolstrip { get; set; }

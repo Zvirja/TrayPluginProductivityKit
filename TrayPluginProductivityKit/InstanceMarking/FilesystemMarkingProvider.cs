@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,11 +9,13 @@ using System.Text;
 using SIM.Instances;
 using SIM.Tool.Plugins.TrayPlugin.Resourcing;
 
+#endregion
+
 namespace TrayPluginProductivityKit.InstanceMarking
 {
   public class FilesystemMarkingProvider
   {
-    #region Enums
+    #region Delegates & Enums
 
     [Flags]
     public enum FOLDERCUSTOMSETTINGSMASK : uint
@@ -27,7 +31,7 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public virtual bool IsInstanceMarked(Instance instance)
     {
@@ -51,10 +55,6 @@ namespace TrayPluginProductivityKit.InstanceMarking
       File.Delete(GetDesktopIniPath(rootPath));
       this.ChangeFolderIconNative(rootPath, null);
     }
-
-    #endregion
-
-    #region Methods
 
     [DllImport("shell32.dll", CharSet = CharSet.Auto)]
     protected static extern UInt32 SHGetSetFolderCustomSettings(ref SHFOLDERCUSTOMSETTINGS pfcs, [MarshalAs(UnmanagedType.LPWStr)] string pszPath, UInt32 dwReadWrite);

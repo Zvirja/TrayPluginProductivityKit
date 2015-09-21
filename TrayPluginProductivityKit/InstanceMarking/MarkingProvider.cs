@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -6,10 +8,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SIM.Base;
+using SIM;
 using SIM.Instances;
 using SIM.Tool.Plugins.TrayPlugin;
 using SIM.Tool.Plugins.TrayPlugin.TrayIcon.ContextMenu.Eventing;
+
+#endregion
 
 namespace TrayPluginProductivityKit.InstanceMarking
 {
@@ -29,7 +33,7 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public virtual void Initialize()
     {
@@ -104,10 +108,6 @@ namespace TrayPluginProductivityKit.InstanceMarking
       this.UnMarkInstanceInternal(menuItem, instanceData);
     }
 
-    #endregion
-
-    #region Methods
-
     protected virtual void CleanupNonExistingEntries()
     {
       //Not initialized yet.
@@ -165,7 +165,7 @@ namespace TrayPluginProductivityKit.InstanceMarking
     protected virtual void OnMenuEntryConstructed(object sender, MenuEntryConstructedArgs args)
     {
       this.ConstructingWaiter.Wait();
-      var relatedInstance = args.Instance;
+      Instance relatedInstance = args.Instance;
       if (relatedInstance == null)
       {
         return;

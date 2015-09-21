@@ -1,12 +1,16 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using SIM.Base;
+using SIM;
 using SIM.Instances;
 using TrayPluginProductivityKit.Helpers;
+
+#endregion
 
 namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandlers
 {
@@ -32,7 +36,8 @@ namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandl
       if (File.Exists(path))
       {
         OSShellHelper.RunFile(path);
-      } else if (Directory.Exists(path))
+      }
+      else if (Directory.Exists(path))
       {
         OSShellHelper.OpenFolderInExplorer(path);
       }

@@ -1,9 +1,13 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using SIM.Base;
+using SIM;
+
+#endregion
 
 namespace TrayPluginProductivityKit.Configuration.Mappings.Metadata
 {
@@ -15,7 +19,7 @@ namespace TrayPluginProductivityKit.Configuration.Mappings.Metadata
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public static MetadataManager ActualManager { get; set; }
 
@@ -24,7 +28,7 @@ namespace TrayPluginProductivityKit.Configuration.Mappings.Metadata
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public static void Initialize()
     {
@@ -36,10 +40,6 @@ namespace TrayPluginProductivityKit.Configuration.Mappings.Metadata
     {
       this.InitializeActionsMetadata();
     }
-
-    #endregion
-
-    #region Methods
 
     protected virtual string GetNodeValue(XmlElement element)
     {

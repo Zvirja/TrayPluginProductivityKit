@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +8,8 @@ using System.Windows;
 using SIM.Instances;
 using SIM.Tool.Plugins.TrayPlugin.Resourcing;
 using TrayPluginProductivityKit.TrayNotifications;
+
+#endregion
 
 namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandlers
 {

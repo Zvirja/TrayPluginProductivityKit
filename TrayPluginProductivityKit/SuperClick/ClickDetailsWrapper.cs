@@ -1,10 +1,14 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SIM.Instances;
 using SIM.Tool.Plugins.TrayPlugin.Common;
 using TrayPluginProductivityKit.Helpers;
+
+#endregion
 
 namespace TrayPluginProductivityKit.SuperClick
 {
@@ -16,7 +20,7 @@ namespace TrayPluginProductivityKit.SuperClick
 
     #endregion
 
-    #region Constructors and Destructors
+    #region Constructors
 
     public ClickDetailsWrapper(MouseClickInformation clickDetails, Instance instance, EventArgs rawArgs)
     {
@@ -28,7 +32,7 @@ namespace TrayPluginProductivityKit.SuperClick
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public MouseClickInformation ClickDetails { get; set; }
 

@@ -1,17 +1,21 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using SIM.Base;
+using SIM;
 using TrayPluginProductivityKit.Configuration;
+
+#endregion
 
 namespace TrayPluginProductivityKit.Helpers
 {
   public static class OSShellHelper
   {
-    #region Public Methods and Operators
+    #region Methods
 
     public static bool ConfirmFileRun(string path)
     {
@@ -20,15 +24,15 @@ namespace TrayPluginProductivityKit.Helpers
         MessageBoxIcon.Question) == DialogResult.Yes;
     }
 
-    public static void RunFile(string filePath)
-    {
-      Process.Start("explorer.exe", filePath);
-    }
-
     public static void OpenFolderInExplorer(string folderPath)
     {
       var args = folderPath;
       Process.Start(TPPKAdvancedSettings.TPPKShell.Value, args);
+    }
+
+    public static void RunFile(string filePath)
+    {
+      Process.Start("explorer.exe", filePath);
     }
 
     public static void ShowMessage(string text, string header, MessageBoxIcon icon = MessageBoxIcon.Information)

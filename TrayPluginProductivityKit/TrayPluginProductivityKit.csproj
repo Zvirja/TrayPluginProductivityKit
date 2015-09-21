@@ -37,41 +37,36 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="SIM.Adapters">
+      <HintPath>D:\SIM.FORBUILD\SIM.Adapters.dll</HintPath>
+    </Reference>
     <Reference Include="SIM.Base">
       <HintPath>D:\SIM.FORBUILD\SIM.Base.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SIM.Kernel.Adapters">
-      <HintPath>D:\SIM.FORBUILD\SIM.Kernel.Adapters.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="SIM.Kernel.Instances">
-      <HintPath>D:\SIM.FORBUILD\SIM.Kernel.Instances.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="SIM.Instances">
+      <HintPath>D:\SIM.FORBUILD\SIM.Instances.dll</HintPath>
     </Reference>
     <Reference Include="SIM.Pipelines">
       <HintPath>D:\SIM.FORBUILD\SIM.Pipelines.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SIM.Kernel.Pipelines">
-      <HintPath>D:\SIM.FORBUILD\SIM.Kernel.Pipelines.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="SIM.Kernel.Products">
-      <HintPath>D:\SIM.FORBUILD\SIM.Kernel.Products.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="SIM.Products">
+      <HintPath>D:\SIM.FORBUILD\SIM.Products.dll</HintPath>
     </Reference>
     <Reference Include="SIM.Tool.Base">
       <HintPath>D:\SIM.FORBUILD\SIM.Tool.Base.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SIM.Tool.Plugins.TrayPlugin">
-      <HintPath>D:\SIM.FORBUILD\Plugins\Tray Plugin\SIM.Tool.Plugins.TrayPlugin.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>D:\SIM.FORBUILD\SIM.Tool.Plugins.TrayPlugin.dll</HintPath>
     </Reference>
     <Reference Include="SIM.Tool.Windows">
       <HintPath>D:\SIM.FORBUILD\SIM.Tool.Windows.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Diagnostics.Base">
+      <HintPath>D:\SIM.FORBUILD\Sitecore.Diagnostics.Base.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />

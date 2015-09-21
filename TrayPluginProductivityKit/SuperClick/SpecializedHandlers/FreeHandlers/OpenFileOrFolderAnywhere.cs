@@ -1,10 +1,14 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using SIM.Base;
+using SIM;
 using TrayPluginProductivityKit.Helpers;
+
+#endregion
 
 namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.FreeHandlers
 {

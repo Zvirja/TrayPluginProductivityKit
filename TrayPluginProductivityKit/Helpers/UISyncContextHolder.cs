@@ -1,20 +1,24 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 
+#endregion
+
 namespace TrayPluginProductivityKit.Helpers
 {
   public static class UISyncContextHolder
   {
-    #region Static Fields
+    #region Fields
 
     public static SynchronizationContext UISyncContext;
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public static void CatchSyncContext()
     {

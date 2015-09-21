@@ -1,22 +1,26 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using SIM.Base;
+using SIM;
 using SIM.Instances;
 using SIM.Products;
 using SIM.Tool.Plugins.TrayPlugin;
 using SIM.Tool.Plugins.TrayPlugin.Resourcing;
 using SIM.Tool.Plugins.TrayPlugin.TrayIcon.ContextMenu.Eventing;
 
+#endregion
+
 namespace TrayPluginProductivityKit.InstanceIcons
 {
   public class IconsPatcher
   {
-    #region Constructors and Destructors
+    #region Constructors
 
     static IconsPatcher()
     {
@@ -25,13 +29,9 @@ namespace TrayPluginProductivityKit.InstanceIcons
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public static IconsPatcher ActualPatcher { get; set; }
-
-    #endregion
-
-    #region Properties
 
     protected Icon DefaultIcon { get; set; }
     protected Dictionary<string, Image> InternalCache { get; set; }
@@ -39,7 +39,7 @@ namespace TrayPluginProductivityKit.InstanceIcons
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public static void Initialize()
     {
@@ -55,10 +55,6 @@ namespace TrayPluginProductivityKit.InstanceIcons
       this.InternalCache = new Dictionary<string, Image>();
       this.ProductManagerInitialized = new ManualResetEventSlim(false);
     }
-
-    #endregion
-
-    #region Methods
 
     protected virtual Image GetIconForInstance(Instance instance)
     {

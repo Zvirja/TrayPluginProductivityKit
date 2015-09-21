@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +8,8 @@ using System.Windows.Forms;
 using SIM.Tool.Plugins.TrayPlugin.Common;
 using SIM.Tool.Plugins.TrayPlugin.TrayIcon.ContextMenu.Eventing;
 using TrayPluginProductivityKit.SuperClick.ClicksMapping;
+
+#endregion
 
 namespace TrayPluginProductivityKit.SuperClick
 {
@@ -23,7 +27,7 @@ namespace TrayPluginProductivityKit.SuperClick
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public virtual void OnExitEntryClick(object sender, ExtendedMouseClickArgs args)
     {

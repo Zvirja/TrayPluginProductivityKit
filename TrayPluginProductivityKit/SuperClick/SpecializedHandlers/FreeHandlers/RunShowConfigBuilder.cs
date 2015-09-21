@@ -1,8 +1,12 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SIM.Tool.Windows.MainWindowComponents;
+
+#endregion
 
 namespace TrayPluginProductivityKit.SuperClick.SpecializedHandlers.FreeHandlers
 {

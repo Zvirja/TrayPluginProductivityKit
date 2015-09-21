@@ -1,14 +1,18 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SIM.Instances;
 
+#endregion
+
 namespace TrayPluginProductivityKit.InstanceMarking
 {
   public class InstanceData
   {
-    #region Constructors and Destructors
+    #region Constructors
 
     public InstanceData(string instanceName, string instaceRootPath)
     {
@@ -18,14 +22,14 @@ namespace TrayPluginProductivityKit.InstanceMarking
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public string InstaceRootPath { get; private set; }
     public string InstanceName { get; private set; }
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public static InstanceData FromInstance(Instance instance)
     {

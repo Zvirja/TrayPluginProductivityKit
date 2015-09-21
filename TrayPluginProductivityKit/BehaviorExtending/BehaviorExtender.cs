@@ -1,32 +1,32 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SIM.Tool.Plugins.TrayPlugin.Configuration.VisibleAppBehavior;
 using TrayPluginProductivityKit.SuperClick;
 
+#endregion
+
 namespace TrayPluginProductivityKit.BehaviorExtending
 {
   public class BehaviorExtender
   {
-    #region Public Properties
+    #region Properties
 
     public static ClicksChief ClicksChief { get; set; }
     public static AppBehavior ExtendedBehavior { get; set; }
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public static void Initialize()
     {
       CreateInstances();
       ReplaceDefaultBehavior();
     }
-
-    #endregion
-
-    #region Methods
 
     private static void CreateInstances()
     {

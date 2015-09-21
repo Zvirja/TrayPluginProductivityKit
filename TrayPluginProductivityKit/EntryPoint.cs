@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,11 +18,13 @@ using TrayPluginProductivityKit.Resources;
 using TrayPluginProductivityKit.SilentStartup;
 using TrayPluginProductivityKit.TrayNotifications;
 
+#endregion
+
 namespace TrayPluginProductivityKit
 {
   public class EntryPoint : IInitProcessor, IMainWindowLoadedProcessor
   {
-    #region Public Methods and Operators
+    #region Interface Impl
 
     public void Process()
     {

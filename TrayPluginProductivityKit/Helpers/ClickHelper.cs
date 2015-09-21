@@ -1,15 +1,19 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Input;
 
+#endregion
+
 namespace TrayPluginProductivityKit.Helpers
 {
   public static class ClickHelper
   {
-    #region Public Methods and Operators
+    #region Methods
 
     public static string GetMouseClickHash(MouseButtons mouseButton, List<Key> keys, bool isInstanceClick)
     {

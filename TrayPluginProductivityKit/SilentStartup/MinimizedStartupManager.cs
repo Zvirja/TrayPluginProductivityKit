@@ -1,26 +1,22 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SIM.Tool.Windows;
 
+#endregion
+
 namespace TrayPluginProductivityKit.SilentStartup
 {
   public class MinimizedStartupManager
   {
-    #region Constants
+    #region Fields
 
     private const string MinimizedStartupKey = "/minimized";
 
-    #endregion
-
-    #region Static Fields
-
     public static MinimizedStartupManager ActualManager = new MinimizedStartupManager();
-
-    #endregion
-
-    #region Fields
 
     private bool _shouldHideDuringStartup = true;
 
@@ -32,16 +28,12 @@ namespace TrayPluginProductivityKit.SilentStartup
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public static void Init(MainWindow mainWindow)
     {
       ActualManager.InitInstance(mainWindow);
     }
-
-    #endregion
-
-    #region Methods
 
     private void InitInstance(MainWindow mainWindow)
     {

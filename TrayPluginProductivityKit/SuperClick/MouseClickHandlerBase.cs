@@ -1,10 +1,14 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Input;
 using TrayPluginProductivityKit.Helpers;
+
+#endregion
 
 namespace TrayPluginProductivityKit.SuperClick
 {
@@ -18,7 +22,7 @@ namespace TrayPluginProductivityKit.SuperClick
 
     #endregion
 
-    #region Constructors and Destructors
+    #region Constructors
 
     protected MouseClickHandlerBase()
     {
@@ -30,7 +34,7 @@ namespace TrayPluginProductivityKit.SuperClick
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public string CustomParameters { get; set; }
 
@@ -77,7 +81,7 @@ namespace TrayPluginProductivityKit.SuperClick
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public virtual bool ProcessClick(ClickDetailsWrapper clickDetails)
     {
@@ -87,10 +91,6 @@ namespace TrayPluginProductivityKit.SuperClick
       }
       return this.ProcessClickInternal(clickDetails);
     }
-
-    #endregion
-
-    #region Methods
 
     protected virtual bool MatchTriggers(ClickDetailsWrapper clickDetails)
     {

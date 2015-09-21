@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -6,17 +8,25 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+#endregion
+
 namespace TrayPluginProductivityKit.InstancePIDs
 {
   public class ProcessMonitor
   {
+    #region Delegates & Enums
+
+    public delegate void ActiveProcessesChanged(List<int> added, List<int> removed, List<int> allPIDs);
+
+    #endregion
+
     #region Fields
 
     public volatile int WorkLoopIntervalMsec;
 
     #endregion
 
-    #region Constructors and Destructors
+    #region Constructors
 
     public ProcessMonitor()
     {
@@ -26,31 +36,15 @@ namespace TrayPluginProductivityKit.InstancePIDs
 
     #endregion
 
-    #region Delegates
-
-    public delegate void ActiveProcessesChanged(List<int> added, List<int> removed, List<int> allPIDs);
-
-    #endregion
-
-    #region Public Events
-
-    public event ActiveProcessesChanged PIDsChanged;
-
-    #endregion
-
-    #region Public Properties
+    #region Properties
 
     public List<int> PIDs { get; set; }
-
-    #endregion
-
-    #region Properties
 
     protected CancellationTokenSource CancellationTokenSource { get; set; }
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public virtual void StartMonitor()
     {
@@ -66,10 +60,6 @@ namespace TrayPluginProductivityKit.InstancePIDs
       this.CancellationTokenSource.Cancel();
       this.CancellationTokenSource = null;
     }
-
-    #endregion
-
-    #region Methods
 
     protected virtual void OnPiDsChanged(List<int> added, List<int> removed, List<int> allpids)
     {
@@ -120,5 +110,7 @@ namespace TrayPluginProductivityKit.InstancePIDs
     }
 
     #endregion
+
+    public event ActiveProcessesChanged PIDsChanged;
   }
 }

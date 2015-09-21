@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,17 +8,19 @@ using System.Windows;
 using SIM.Instances;
 using SIM.Tool.Windows.MainWindowComponents;
 
+#endregion
+
 namespace TrayPluginProductivityKit.Helpers
 {
   public static class SIMDialogsInteractionHelper
   {
-    #region Public Properties
+    #region Properties
 
     public static Window MainWindow { get; set; }
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public static void OpenCurrentInstanceLog(Instance instance)
     {

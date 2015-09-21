@@ -1,18 +1,22 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Input;
-using SIM.Base;
+using SIM;
 using TrayPluginProductivityKit.SuperClick.SpecializedHandlers.FreeHandlers;
 using TrayPluginProductivityKit.SuperClick.SpecializedHandlers.InstanceHandlers;
+
+#endregion
 
 namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
 {
   public class ClickHandlersMappings
   {
-    #region Static Fields
+    #region Fields
 
     public static readonly string ExitEntryClickKey = "ExitEntryClick";
     public static readonly string InstanceClickKey = "InstanceClick";
@@ -21,7 +25,7 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
 
     #endregion
 
-    #region Constructors and Destructors
+    #region Constructors
 
     static ClickHandlersMappings()
     {
@@ -36,19 +40,15 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public static ClickHandlersMappings ActualMappings { get; set; }
-
-    #endregion
-
-    #region Properties
 
     protected Dictionary<string, List<MouseClickHandlerBase>> HandlerMappings { get; set; }
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public virtual void HandleEvent(string groupKey, ClickDetailsWrapper clickDetails)
     {
@@ -69,10 +69,6 @@ namespace TrayPluginProductivityKit.SuperClick.ClicksMapping
         }
       }
     }
-
-    #endregion
-
-    #region Methods
 
     protected virtual void AddMapping(string key, MouseClickHandlerBase handler)
     {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,12 +9,14 @@ using System.Windows.Input;
 using System.Xml.Serialization;
 using TrayPluginProductivityKit.SuperClick;
 
+#endregion
+
 namespace TrayPluginProductivityKit.Configuration.Mappings.Metadata
 {
   [Serializable]
   public class MappingMetadata
   {
-    #region Public Properties
+    #region Properties
 
     [XmlElement]
     public string EventName { get; set; }
@@ -65,7 +69,7 @@ namespace TrayPluginProductivityKit.Configuration.Mappings.Metadata
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     public virtual MouseClickHandlerBase GetProperlyConfiguredHandler()
     {
@@ -89,10 +93,6 @@ namespace TrayPluginProductivityKit.Configuration.Mappings.Metadata
       }
       return actionMetadatas[this.RelatedActionKey].GetNewlyConsntructedAction();
     }
-
-    #endregion
-
-    #region Methods
 
     protected virtual Key ParseKey(string key)
     {
